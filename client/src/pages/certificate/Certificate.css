@@ -1,0 +1,18 @@
+.certificate {
+    border: 1px solid #000;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    margin: 20px auto;
+    background: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #4CAF50;
+}
+
+footer {
+    margin-top: 50px;
+    font-style: italic;
+}
