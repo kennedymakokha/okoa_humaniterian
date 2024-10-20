@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 // import { SidebarContext } from './index'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import cn from "classnames";
 import Logo from './../../assets/logo.png'
 import { useSelector } from 'react-redux';
@@ -9,7 +9,22 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
 
     const { userInfo } = useSelector((state) => state.auth)
     const Icon = collapsed ? "m8.25 4.5 7.5 7.5-7.5 7.5" : "M15.75 19.5 8.25 12l7.5-7.5";
+    const navigate = useNavigate();
 
+useEffect(() => {
+  console.log(userInfo)
+if(userInfo === null ){
+navigate('/login?id=1213')
+    // if(userInfo.role === 'admin'){
+    //   navItems = navItems.filter(item => item.role === 'admin')
+    // }else if(userInfo.role === 'teacher'){
+    //   navItems = navItems.filter(item => item.role === 'teacher')
+    // }else if(userInfo.role === 'student'){
+    //   navItems = navItems.filter(item => item.role ==='student')
+    // }
+  
+}
+}, [])
 
 
     return (
@@ -96,7 +111,7 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
                         />
                         {!collapsed && (
                             <div className="flex  flex-col">
-                                <span className="text-purple-50 my-0 uppercase text-[12px]">{userInfo.name}</span>
+                                <span className="text-purple-50 my-0 uppercase text-[12px]">{userInfo?.name}</span>
                                 {/* <Link href="/" className="text-purple-200 text-sm">
                                     View Profile
                                 </Link> */}

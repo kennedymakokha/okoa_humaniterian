@@ -14,6 +14,7 @@ import HTTP from 'http'
 import course_routes from './routes/courses.route.js'
 import user_routes from './routes/users.route.js'
 import dataEntry_routes from './routes/dataenty.route.js'
+import practical_routes from './routes/practicals.route.js'
 
 import events from 'events'
 
@@ -30,6 +31,11 @@ events.EventEmitter.defaultMaxListeners = 15;
 connectDb()
 const app = express()
 app.use(cors("*"))
+app.use((req, res, next) => {
+    // Set the Referrer-Policy header
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    next();
+  });
 var http = HTTP.createServer(app);
 app.use(express.json())
 
@@ -42,6 +48,7 @@ app.use(cookieParser())
 app.use('/api/courses', course_routes)
 app.use('/api/users', user_routes)
 app.use('/api/data-entry', dataEntry_routes)
+app.use('/api/practicals', practical_routes)
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 

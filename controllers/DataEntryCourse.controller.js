@@ -1,10 +1,9 @@
 import expressAsyncHandler from "express-async-handler"
-import multer from 'multer';
 import csv from 'csv-parser';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import User from './../models/auth.model.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -45,12 +44,15 @@ export function compareData(original, newData) {
 
 
 
+
+
 export const Upload_task = expressAsyncHandler(async (req, res) => {
     try {
         const results = [];
         const OriginalData = [];
         const filePath = path.join(__dirname, '../uploads', req.file.filename); // Use the filename from multer
-
+        const userObj = await User.findById(req.body.student).select('name')
+        console.log(userObj)
         fs.createReadStream('./data_20.csv')
             .pipe(csv())
             .on('data', (data) => OriginalData.push(data))
@@ -67,9 +69,8 @@ export const Upload_task = expressAsyncHandler(async (req, res) => {
                 const discrepancies = compareData(OriginalData, results);
                 let Errors = []
                 const Acuracy = (1 - discrepancies.length / OriginalData.length) * 100
-                // results.length / 60
+
                 if (discrepancies.length > 0) {
-                    // console.log("Discrepancies found:");
 
                     discrepancies.forEach((discrepancy) => {
 
@@ -91,8 +92,8 @@ export const Upload_task = expressAsyncHandler(async (req, res) => {
                 } else {
                     console.log("No discrepancies found.");
                 }
-
-                return res.status(200).json({ speed: Speed, acuracy: Acuracy, records: results.length, errors: Errors });
+                
+                return res.status(200).json({ name:userObj.name, speed: Speed, acuracy: Acuracy, records: results.length, errors: Errors });
             })
             .on('error', (error) => {
                 res.status(500).send('Error reading CSV file');

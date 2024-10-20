@@ -73,6 +73,7 @@ function index() {
 
     return (
         <>
+       
             <Table isLoading={isLoading} key_column="course_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Courses Offered" data={isSuccess && data !== undefined ? data : []} />
 
             {popUp && <Create_Modal
