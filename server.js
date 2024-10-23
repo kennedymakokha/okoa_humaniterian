@@ -15,6 +15,7 @@ import course_routes from './routes/courses.route.js'
 import user_routes from './routes/users.route.js'
 import dataEntry_routes from './routes/dataenty.route.js'
 import practical_routes from './routes/practicals.route.js'
+import finance_routes from './routes/finance.route.js'
 
 import events from 'events'
 
@@ -49,6 +50,7 @@ app.use('/api/courses', course_routes)
 app.use('/api/users', user_routes)
 app.use('/api/data-entry', dataEntry_routes)
 app.use('/api/practicals', practical_routes)
+app.use('/api/finances', finance_routes)
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 

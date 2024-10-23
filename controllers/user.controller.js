@@ -2,6 +2,7 @@ import expressAsyncHandler from "express-async-handler"
 import User from '../models/auth.model.js'
 import Guardian from '../models/guardian.model.js'
 import Course from '../models/courses.model.js'
+import Fee from '../models/fee.model.js'
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { CustomError } from "../midddlewares/custom_error_middleware.js";
@@ -30,7 +31,7 @@ export const create_user = expressAsyncHandler(async (req, res) => {
         req.body.phone_number = await Format_phone_number(req.body.phone_number); //format the phone number
         const phone = await User.findOne({
             $or: [
-                { ID_no: req.body.ID_no },
+                // { ID_no: req.body.ID_no },
                 { phone_number: req.body.phone_number, }
             ]
         });
@@ -38,11 +39,21 @@ export const create_user = expressAsyncHandler(async (req, res) => {
         if (phone) {
             return res.status(400).json({ message: 'User Exists !! ' })
         }
-        req.body.validity = ValidityFunc(Date(), course.course_duration)
+        if (req.body.role === "student") {
+            req.body.validity = ValidityFunc(Date(), course.course_duration)
+        }
+
         req.body.createdBy = req.user._id
         req.body.verification_code = MakeActivationCode(5);
+        req.body.adm_no = `2024/${MakeActivationCode(4)}`;
         req.body.hashPassword = bcrypt.hashSync(req.body.password, 10);
         let data = await User.create(req.body)
+        await Fee.create({
+            student: data._id,
+            student_name: data.name,
+            arrears: course.course_price,
+            createdBy: req.user._id
+        })
         return res.status(200).json(data._id)
     } catch (error) {
         console.log(error)
@@ -105,6 +116,16 @@ export const update_user = expressAsyncHandler(async (req, res) => {
         let updates = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, useFindAndModify: false })
         return res.status(200).json({ message: 'Updated successfully ', updates })
     } catch (error) {
+        return res.status(400).json({ message: 'Updated failed ' })
+    }
+})
+
+export const Enroll_user = expressAsyncHandler(async (req, res) => {
+    try {
+        let updates = await User.findOneAndUpdate({ _id: req.params.id }, { enroled: true }, { new: true, useFindAndModify: false })
+        return res.status(200).json({ message: 'Updated successfully ', updates })
+    } catch (error) {
+        console.log(error)
         return res.status(400).json({ message: 'Updated failed ' })
     }
 })

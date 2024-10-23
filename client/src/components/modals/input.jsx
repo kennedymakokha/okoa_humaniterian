@@ -5,11 +5,11 @@ import React, { useState } from "react";
 function Input({ label, required, value, disable, name, type, onChange }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="flex w-full px-2 gap-x-2 rounded-md border md:border-slate-200 border-purple-800">
-      <div className="flex capitalize md:text-slate-500 text-slate-50  ">
+    <div className="flex w-full px-2 items-center gap-x-2 rounded-md border md:border-slate-200 border-purple-800">
+      <div className="flex capitalize md:text-slate-500 text-slate-50  font-bold ">
         {label}{" "}
         {required === true && (
-          <span className="text-red-500 px-2 text-bold">* </span>
+          <span className="text-red-500 px-2 font-bold">* </span>
         )}
       </div>
       <input
@@ -18,7 +18,7 @@ function Input({ label, required, value, disable, name, type, onChange }) {
         type={type === "password" && show ? "text" : type ? type : "text"}
         value={value}
         onChange={(e) => onChange(e.target.value, name)}
-        className={`flex focus:outline-none bg-transparent focus:bg-transparent  focus:ring-0 focus:ring-offset-0 w-full`}
+        className={`flex py-2  items-center focus:outline-none bg-transparent focus:bg-transparent  focus:ring-0 focus:ring-offset-0 w-full`}
       />
       {type === "password" && (
         <div
@@ -72,10 +72,11 @@ export const SelectContainer = ({
   name,
   key_name,
   item,
+  required,
   handleChange,
 }) => {
   const [hoveredOption, setHoveredOption] = useState(null);
-  console.log(item[name]);
+  // console.log(item[name]);
   const handleMouseEnter = (option) => {
     setHoveredOption(option);
     console.log(option);
@@ -85,27 +86,33 @@ export const SelectContainer = ({
     setHoveredOption(null);
   };
   return (
-    <>
+    <div className={`rounded-md flex justify-between  appearance-none relative block w-full px-3 py-1 border  
+    }border-gray-300 items-center placeholder-gray-500 text-gray-500 focus:outline-none focus:ring-secondary-100 focus:border-secondary-100 focus:z-10 sm:text-[18px] text-sm`}
+  >
+    
       <select
-        className={`rounded-md  appearance-none relative block w-full px-3 py-1 border ${
-          item[name] === "" && "bg-red-700"
-        }border-gray-300 placeholder-gray-500 text-gray-500 focus:outline-none focus:ring-secondary-100 focus:border-secondary-100 focus:z-10 sm:text-[18px] text-sm`}
+        className={`rounded-md  appearance-none relative block w-[90%]    
+        } placeholder-gray-500 py-2 text-gray-500 focus:outline-none focus:ring-secondary-100  focus:z-10 sm:text-[18px] text-sm`}
         onChange={handleChange}
       >
-        <option value="">Select {name} </option>
+        <option value="">Select {name}
+        </option>  
         {array?.map((arr, i) => (
           <option
             key={i}
             value={arr["_id"]}
             onMouseEnter={() => handleMouseEnter(arr[key_name])}
             onMouseLeave={handleMouseLeave}
-            className="h-20 capitalize"
+           
           >
             {arr[key_name]}
           </option>
         ))}
       </select>
-    </>
+      {required === true && (
+            <span className="text-red-500 w-[9%] px-2 text-bold">* </span>
+          )}
+    </div>
   );
 };
 

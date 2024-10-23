@@ -19,7 +19,16 @@ const DataEntrySchema = new Schema({
     records: {
         type: String,
     },
+    records_entered: {
+        type: String,
+    },
+    test: {
+        type: String,
+    },
     time: {
+        type: String,
+    },
+    studentName: {
         type: String,
     },
 
@@ -32,5 +41,5 @@ const DataEntrySchema = new Schema({
 
 
 
-const Model = mongoose.model('guardian_tb', DataEntrySchema);
+const Model = mongoose.model('data_entry_practical_tb', DataEntrySchema);
 export default Model

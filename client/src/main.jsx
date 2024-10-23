@@ -19,12 +19,13 @@ import Lecturers from './pages/lecturers'
 import Cert from './pages/certificate'
 import Students from './pages/students'
 import Student from './pages/students/student.jsx'
+import Finance from './pages/finance'
 import { Provider } from 'react-redux'
 import { store } from './store.js'
 import Login from './pages/login.jsx'
 import DataAnalisis from './pages/dataAnalisis.jsx'
 const rootFontStyle = {
-  fontSize: '20px',
+  // fontSize: '29px',
   fontFamily: "RalewayDots-Regular",
   color: ' rgb(71, 84, 103)'
 }
@@ -74,10 +75,10 @@ const router = createBrowserRouter([
         path: "data-entry-checker",
         element: <DataAnalisis />,
       },
-      // {
-      //   path: "shelves/:name",
-      //   element: <ShelveDetails />,
-      // },
+      {
+        path: "accounts",
+        element: <Finance />,
+      },
       // {
       //   path: "shelves",
       //   element: <Shelves />,

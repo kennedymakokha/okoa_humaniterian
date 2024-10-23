@@ -26,9 +26,9 @@ export const validateUserInput = (data) => {
     if (Validator.isEmpty(data.dob)) {
         errors.dob = 'Enter date of birth';
     }
-    if (Validator.isEmpty(data.ID_no)) {
-        errors.ID_no = 'Enter date of birth';
-    }
+    // if (Validator.isEmpty(data.ID_no)) {
+    //     errors.ID_no = 'Enter date of birth';
+    // }
     // if (Validator.isEmpty(data.dob)) {
     //     errors.dob = 'Enter date of birth';
     // }

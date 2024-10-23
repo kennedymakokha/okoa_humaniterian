@@ -42,11 +42,12 @@ const Layout = (props) => {
                 <div
                     className={classNames({
                         // 👇 use grid layout
-                        "grid min-h-screen": true,
+                        "grid min-h-screen ": true,
                         // 👇 toggle the width of the sidebar depending on the state
                         "grid-cols-sidebar": !collapsed,
                         "grid-cols-sidebar-collapsed": collapsed,
                         // 👇 transition animation classes
+                        
                         "transition-[grid-template-columns] duration-300 ease-in-out": true,
                     })}
                 >
@@ -55,8 +56,8 @@ const Layout = (props) => {
 
                     {/* content */}
                     <div className="bg-gray-50">
-                        <div  className="flex w-full h-[11.5%]  px-2 items-center justify-end shadow-sm">
-                            <span onClick={() => LogOutHandler()} className="bg-[rgb(101,12,174)] cursor-pointer flex pointe items-center  gap-x-2 px-3 py-2 text-white text-[14px] rounded-md shadow-2xl">
+                        <div  className="flex w-full h-[10.5%] bg-[rgb(101,12,174)] shadow-2xl rounded-tr-md  px-2 items-center justify-end ">
+                            <span onClick={() => LogOutHandler()} className="bg-white cursor-pointer flex pointe items-center  gap-x-2 px-3 py-2 text-red-600 text-[14px] rounded-md shadow-2xl">
                                 <img src={Logout} alt="" className="w-5 h-5" />
                                 Logout</span>
                         </div>

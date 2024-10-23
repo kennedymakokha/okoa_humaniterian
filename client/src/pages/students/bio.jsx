@@ -25,8 +25,8 @@ function Bio({ details }) {
                     <span className="underline">Guardian contact</span>
                     <Item value={details?.guardian?.name} label="Name" />
                     <Item value={details?.guardian?.phone_number} label="phone" />
-                    <Item value={details?.guardian?.email} label="email" />
-                    <Item value={details?.guardian?.ID_no} label="ID No" />
+                    <Item value={details?.guardian?.address} label="Address" />
+                    <Item value={details?.guardian?.relationship} label="ID No" />
                 </div>}
             </div>
             <span className="font-semibold text-slate-600 ">Personal Information</span>

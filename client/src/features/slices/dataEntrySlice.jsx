@@ -10,10 +10,11 @@ export const DataentryApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
-
-
-
+        fetch_prac_result: builder.query({
+            query: (id) => `${USER_URL}?id=${id}`,
+        }),
     })
+    
 })
 
-export const { useTest_uploadsMutation } = DataentryApiSlice
+export const { useTest_uploadsMutation,useFetch_prac_resultQuery } = DataentryApiSlice

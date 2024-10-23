@@ -5,7 +5,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Upload_task } from '../controllers/DataEntryCourse.controller.js'
+import { Upload_task, get_user_results } from '../controllers/DataEntryCourse.controller.js'
 
 const router = express.Router()
 // Get __dirname equivalent
@@ -28,7 +28,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 router.route('/')
-    // .get(isAuth, get_courses)
+    .get( get_user_results)
     .post(upload.single('csv_file'), Upload_task)
+router.route('/:id')
+    // .get(isAuth, get_courses)
+    // .get(isAuth,get_user_results )
 
 export default router 

@@ -59,6 +59,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        enrollUser: builder.mutation({
+            query: (_id) => ({
+                url: `${USER_URL}/enroll/${_id}`,
+                method: "PUT",
+                
+            })
+        }),
 
         fetchuser: builder.query({
             query: (id) => ({
@@ -110,4 +117,4 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useLoginMutation, usePost_guardianMutation, useUpdate_userMutation, useDelete_userMutation, useResetPassMutation, useRecoverPassMutation, useResendactivateMutation, useActivateMutation, useGet_usersQuery, useEditUserDetailsMutation, useLogoutMutation, usePost_userMutation, useGetuserQuery, useFetchuserQuery } = usersApiSlice
+export const { useLoginMutation, useEnrollUserMutation, usePost_guardianMutation, useUpdate_userMutation, useDelete_userMutation, useResetPassMutation, useRecoverPassMutation, useResendactivateMutation, useActivateMutation, useGet_usersQuery, useEditUserDetailsMutation, useLogoutMutation, usePost_userMutation, useGetuserQuery, useFetchuserQuery } = usersApiSlice

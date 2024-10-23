@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import User from './../models/auth.model.js';
+import Results from './../models/dataentryTestResults.model.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -52,8 +53,9 @@ export const Upload_task = expressAsyncHandler(async (req, res) => {
         const OriginalData = [];
         const filePath = path.join(__dirname, '../uploads', req.file.filename); // Use the filename from multer
         const userObj = await User.findById(req.body.student).select('name')
-        console.log(userObj)
-        fs.createReadStream('./data_20.csv')
+        let Outcome = {}
+
+        fs.createReadStream('./practical1.csv')
             .pipe(csv())
             .on('data', (data) => OriginalData.push(data))
             .on('end', () => {
@@ -92,17 +94,38 @@ export const Upload_task = expressAsyncHandler(async (req, res) => {
                 } else {
                     console.log("No discrepancies found.");
                 }
-                
-                return res.status(200).json({ name:userObj.name, speed: Speed, acuracy: Acuracy, records: results.length, errors: Errors });
+
+                Results.create({
+                    student: userObj._id,
+                    studentName: userObj.name,
+                    accuracy: Acuracy,
+                    speed: Speed,
+                    records: OriginalData.length,
+                    records_entered: results.length,
+                    time: 60,
+                    test: req.body.test
+                })
+                return res.status(200).json({ name: userObj.name, speed: Speed, acuracy: Acuracy, records: results.length, errors: Errors });
             })
             .on('error', (error) => {
                 res.status(500).send('Error reading CSV file');
                 // });
             });
-
+        // console.log(Outcome)
+        // await Results.create(Outcome).save()
 
     } catch (error) {
         console.log(error)
+    }
+})
+
+export const get_user_results = expressAsyncHandler(async (req, res) => {
+    try {
+        const e = await Results.find({ student: req.query.id }).populate('student', 'name')
+        return res.status(200).json(e)
+
+    } catch (error) {
+        res.status(500).json(error)
     }
 })
 export const Upload_test = expressAsyncHandler(async (req, res) => {

@@ -14,6 +14,9 @@ const GuardianSchema = new Schema({
     email: {
         type: String
     },
+    address: {
+        type: String
+    },
 
     ID_no: {
         type: String,
@@ -22,6 +25,11 @@ const GuardianSchema = new Schema({
     deletedAt: {
         type: String,
         default: null,
+    },
+    relationship: {
+        type: String,
+        enum: ["parent", "guardian", "sibling"],
+        default: "parent"
     },
 
 }, { timestamps: true });

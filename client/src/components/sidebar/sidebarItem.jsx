@@ -11,42 +11,42 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
     const Icon = collapsed ? "m8.25 4.5 7.5 7.5-7.5 7.5" : "M15.75 19.5 8.25 12l7.5-7.5";
     const navigate = useNavigate();
 
-useEffect(() => {
-  console.log(userInfo)
-if(userInfo === null ){
-navigate('/login?id=1213')
-    // if(userInfo.role === 'admin'){
-    //   navItems = navItems.filter(item => item.role === 'admin')
-    // }else if(userInfo.role === 'teacher'){
-    //   navItems = navItems.filter(item => item.role === 'teacher')
-    // }else if(userInfo.role === 'student'){
-    //   navItems = navItems.filter(item => item.role ==='student')
-    // }
-  
-}
-}, [])
+    useEffect(() => {
+        console.log(userInfo)
+        if (userInfo === null) {
+            navigate('/login?id=1213')
+            // if(userInfo.role === 'admin'){
+            //   navItems = navItems.filter(item => item.role === 'admin')
+            // }else if(userInfo.role === 'teacher'){
+            //   navItems = navItems.filter(item => item.role === 'teacher')
+            // }else if(userInfo.role === 'student'){
+            //   navItems = navItems.filter(item => item.role ==='student')
+            // }
+
+        }
+    }, [])
 
 
     return (
         <div
             className={cn({
-                "bg-[rgb(101,12,174)] text-zinc-50 z-20": true,
+                "bg-[rgb(101,12,174)] rounded-tl-md text-zinc-50 z-20": true,
             })}
         >
             <div
                 className={cn({
-                    "flex flex-col justify-between": true,
+                    "flex flex-col justify-between ": true,
                 })}
             >
                 {/* logo and collapse button */}
                 <div
                     className={cn({
-                        "flex items-center border-b bg-gray-50 border-b-purple-800": true,
+                        "flex items-center  bg-[rgb(101,12,174)] shadow-2xl  rounded-tl-md  ": true,
                         "p-4 justify-between": !collapsed,
                         "py-4 justify-center": collapsed,
                     })}
                 >
-                    {!collapsed && <span className="whitespace-nowrap flex items-center gap-x-2 text-[rgb(101,12,174)] font-bold uppercase">
+                    {!collapsed && <span className="whitespace-nowrap flex items-center gap-x-2 text-white font-bold uppercase">
                         <img src={Logo} alt=" " className=" w-10 h-10" />
                         Okoa CBO</span>}
                     <button
@@ -58,10 +58,9 @@ navigate('/login?id=1213')
                         // 👇 set the collapsed state on click
                         onClick={() => setCollapsed(!collapsed)}
                     >
-
                         <img src={Logo} alt="w-10 h-10" className={`w-10 h-10 ${!collapsed && "hidden"} `} />
                         <div className="absolute inset-0 flex justify-center items-center z-20">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={!collapsed ? 1.5 : 3} stroke="currentColor" className={`size-6 ${!collapsed ? "text-[rgb(101,12,174)]" : "text-white"} font-bold`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={!collapsed ? 1.5 : 3} stroke="currentColor" className={`size-6 ${!collapsed ? "text-slate-100" : "text-white"} font-bold`}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d={Icon} />
                             </svg>
                         </div>

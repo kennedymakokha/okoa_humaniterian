@@ -28,10 +28,18 @@ const UserSchema = new Schema({
     verification_code: {
         type: String,
     },
+    adm_no: {
+        type: String,
+    },
+    enroled: {
+        type: Boolean,
+        default: false
+    },
     validity: {
         type: Date,
-        default: Date() 
+        default: Date()
     },
+   
     role: {
         type: String,
         enum: ["student", "instructor", "admin", "supplier"],
