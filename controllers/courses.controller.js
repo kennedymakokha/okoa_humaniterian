@@ -37,6 +37,14 @@ const delete_course = expressAsyncHandler(async (req, res) => {
        
     }
 })
+export const update_Course = expressAsyncHandler(async (req, res) => {
+    try {
+        let updates = await Course.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, useFindAndModify: false })
+        return res.status(200).json({ message: 'Updated successfully ', updates })
+    } catch (error) {
+        return res.status(400).json({ message: 'Updated failed ' })
+    }
+})
 
 export {
     get_courses, create_course, delete_course

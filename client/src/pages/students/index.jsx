@@ -42,11 +42,11 @@ function index() {
         { Header: 'Adm', accessor: 'adm_no' },
         { Header: 'name', accessor: 'name' },
         { Header: 'Phone Number', accessor: 'phone_number' },
-       
+
         { Header: 'Identificaton', accessor: 'ID_no' },
         { Header: 'gender', accessor: 'gender' },
         { Header: 'Date of Birth', accessor: 'dob' },
-       
+
     ];
     const { data: courses, isLoading, isSuccess: cousrsesSuccess } = useFetch_coursesQuery()
     const [Post_user] = usePost_userMutation()
@@ -87,21 +87,13 @@ function index() {
             }
             else {
                 response = await Post_user(item).unwrap()
-                setPopUp(false)
             }
-
             await refetch()
+            setPopUp(false)
             setItem(initialState)
-            // console.log(response)
-
         } catch (error) {
-            // console.log(error)
             setError(error?.data?.message)
-
-
         }
-
-
     }
     const submitGuardian = async () => {
         try {

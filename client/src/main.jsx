@@ -24,10 +24,11 @@ import { Provider } from 'react-redux'
 import { store } from './store.js'
 import Login from './pages/login.jsx'
 import DataAnalisis from './pages/dataAnalisis.jsx'
+import { NavbarProvider } from './context/sideBar.context.jsx'
 const rootFontStyle = {
   // fontSize: '29px',
-  fontFamily: "RalewayDots-Regular",
-  color: ' rgb(71, 84, 103)'
+  // fontFamily: "RalewayDots-Regular",
+  // color: ' rgb(71, 84, 103)'
 }
 
 const router = createBrowserRouter([
@@ -170,11 +171,13 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <div style={rootFontStyle}>
-        <RouterProvider router={router} />
-        {/* <ToastContainer /> */}
-      </div>
-    </Provider>
+    <NavbarProvider>
+      <Provider store={store}>
+        <div style={rootFontStyle}>
+          <RouterProvider router={router} />
+          {/* <ToastContainer /> */}
+        </div>
+      </Provider>
+    </NavbarProvider>
   </React.StrictMode>,
 )

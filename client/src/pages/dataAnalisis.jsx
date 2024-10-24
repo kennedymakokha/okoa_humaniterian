@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Input, { SelectContainer } from '../components/modals/input'
 import { useGet_usersQuery } from '../features/slices/usersApiSlice'
 import { useTest_uploadsMutation } from '../features/slices/dataEntrySlice'
-import { downloadCSV } from './ext.func'
+import { downloadCSV } from './ext.func.js'
 
 const DataAnalisis = () => {
     const [item, setItem] = useState({

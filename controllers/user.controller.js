@@ -141,6 +141,21 @@ export const create_guardian = expressAsyncHandler(async (req, res) => {
     }
 })
 
+export const count_everything = expressAsyncHandler(async (req, res) => {
+    try {
+        let users = await User.find({deletedAt:null})
+        let courses = await Course.find({deletedAt:null})
+
+        const RoleUsers = (str) => {
+            return users.filter((user) => user.role === str).length
+        }
+        return res.status(200).json({ students: RoleUsers('student'), instructors: RoleUsers('instructor'), admin: RoleUsers('admin') , sponsors: RoleUsers('Sponsors'),courses:courses.length })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ message: 'Updated failed ' })
+    }
+})
+
 
 
 

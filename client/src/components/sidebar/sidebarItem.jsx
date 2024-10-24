@@ -4,15 +4,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import cn from "classnames";
 import Logo from './../../assets/logo.png'
 import { useSelector } from 'react-redux';
+import { useNavbar } from './../../context/sideBar.context';
 
-export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
-
+export const Sidebar = ({ navItems }) => {
+    const { collapsed, toggleNavbar } = useNavbar();
     const { userInfo } = useSelector((state) => state.auth)
     const Icon = collapsed ? "m8.25 4.5 7.5 7.5-7.5 7.5" : "M15.75 19.5 8.25 12l7.5-7.5";
     const navigate = useNavigate();
-
+    let location = useLocation()
     useEffect(() => {
-        console.log(userInfo)
+        
         if (userInfo === null) {
             navigate('/login?id=1213')
             // if(userInfo.role === 'admin'){
@@ -25,12 +26,12 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
 
         }
     }, [])
-
+    // console.log(location.pathname)
 
     return (
         <div
             className={cn({
-                "bg-[rgb(101,12,174)] rounded-tl-md text-zinc-50 z-20": true,
+                "bg-[rgb(101,12,174)]  text-zinc-50 z-20": true,
             })}
         >
             <div
@@ -41,13 +42,13 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
                 {/* logo and collapse button */}
                 <div
                     className={cn({
-                        "flex items-center  bg-[rgb(101,12,174)] shadow-2xl  rounded-tl-md  ": true,
+                        "flex items-center  bg-[rgb(101,12,174)]    ": true,
                         "p-4 justify-between": !collapsed,
                         "py-4 justify-center": collapsed,
                     })}
                 >
                     {!collapsed && <span className="whitespace-nowrap flex items-center gap-x-2 text-white font-bold uppercase">
-                        <img src={Logo} alt=" " className=" w-10 h-10" />
+                        <img src={Logo} alt=" " className={`${collapsed ? "size-6" : "size-10"}`} />
                         Okoa CBO</span>}
                     <button
                         className={cn({
@@ -56,7 +57,7 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
                             "w-10 h-10 rounded-full relative z-0": true, // shape
                         })}
                         // 👇 set the collapsed state on click
-                        onClick={() => setCollapsed(!collapsed)}
+                        onClick={toggleNavbar}
                     >
                         <img src={Logo} alt="w-10 h-10" className={`w-10 h-10 ${!collapsed && "hidden"} `} />
                         <div className="absolute inset-0 flex justify-center items-center z-20">
@@ -77,20 +78,21 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
                                 <li
                                     key={index}
                                     className={cn({
+                                        "bg-red-500":location.pathname===item.url,
                                         "text-purple-100 hover:bg-purple-900 flex": true, //colors
                                         "transition-colors duration-300": true, //animation
                                         "rounded-md p-2 mx-3 gap-4 ": !collapsed,
                                         "rounded-full p-2 mx-3 w-10 h-10": collapsed,
                                     })}
                                 >
-                                    <Link to={item.url} className="flex gap-2 capitalize items-center">
+                                    <Link to={item.url} className="flex gap-2  capitalize items-center">
                                         <div className=" group size-6 relative z-0">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6`}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                                             </svg>
-                                            <div className="absolute hidden size-6   group-hover:flex inset-0 flex justify-center items-center z-10">
-                                                <div className="flex  p-2 bg-purple-600 rounded-md text-white uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
-                                                
+                                            <div className={`absolute left-10  hidden    ${collapsed && "group-hover:flex"} inset-0 flex justify-center items-center z-10`}>
+                                                <div className="flex shadow-2xl  items-center justify-center p-2 bg-slate-100 rounded-sm text-purple-700 uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
+
                                             </div>
                                         </div>
 

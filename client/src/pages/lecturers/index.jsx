@@ -39,9 +39,9 @@ function index() {
 
     ];
     const { data: courses, isLoading, isSuccess: cousrsesSuccess } = useFetch_coursesQuery()
-    console.log(courses)
+
     const [Post_user] = usePost_userMutation()
-    const [Post_Guardian] = usePost_guardianMutation()
+
     const [delete_user,] = useDelete_userMutation()
     const [UpdateUser] = useUpdate_userMutation()
     const [filter, setFilter] = useState({
@@ -69,16 +69,14 @@ function index() {
             }
             else {
                 response = await Post_user(item).unwrap()
-                setPopUp(false)
-
             }
-
             await refetch()
+            setPopUp(false)
             setItem(initialState)
-            // console.log(response)
+
 
         } catch (error) {
-            // console.log(error)
+           
             setError(error?.data?.message)
 
 

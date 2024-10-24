@@ -3,8 +3,8 @@ import Table from '../../components/table';
 import Create_Modal from '../../components/modals/create_modal';
 import Input from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
-import { useCreate_courseMutation, useDelete_courseMutation, useFetch_coursesQuery } from '../../features/slices/cousesSlice';
-import { useUpdate_userMutation } from '../../features/slices/usersApiSlice';
+import { useCreate_courseMutation, useDelete_courseMutation, useFetch_coursesQuery, useUpdate_courseMutation } from '../../features/slices/cousesSlice';
+
 
 
 function index() {
@@ -25,7 +25,7 @@ function index() {
     const { data, isLoading, isSuccess, refetch } = useFetch_coursesQuery()
 
     const [PostCourse, isFetching, error] = useCreate_courseMutation()
-    const [UpdateCourse] = useUpdate_userMutation()
+    const [UpdateCourse] = useUpdate_courseMutation()
 
     const [DeleteCourse] = useDelete_courseMutation()
 
@@ -37,8 +37,10 @@ function index() {
     }
 
     const submit = async () => {
+
         try {
             if (item._id) {
+                
                 await UpdateCourse(item).unwrap()
             } else {
                 await PostCourse(item).unwrap()
@@ -73,7 +75,7 @@ function index() {
 
     return (
         <>
-       
+
             <Table isLoading={isLoading} key_column="course_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Courses Offered" data={isSuccess && data !== undefined ? data : []} />
 
             {popUp && <Create_Modal
@@ -82,9 +84,9 @@ function index() {
                 item={item}
                 error={isFetching?.error?.data?.message}
                 body={<div className='gap-y-2 flex flex-col'>
-                    <Input label="Course" name="course_name" value={item.name} onChange={handleChange} />
-                    <Input label="Duration" name="course_duration" value={item.duration} type="number" onChange={handleChange} />
-                    <Input label="Price" name="course_price" value={item.duration} type="number" onChange={handleChange} />
+                    <Input label="Course" name="course_name" value={item.course_name} onChange={handleChange} />
+                    <Input label="Duration" name="course_duration" value={item.course_duration} type="number" onChange={handleChange} />
+                    <Input label="Price" name="course_price" value={item.course_price} type="number" onChange={handleChange} />
                 </div>}
                 name="Course" setPopUp={setPopUp} />}
             {show && <Delete_Modal

@@ -74,10 +74,10 @@ function index() {
 
             await refetch()
             // setItem(initialState)
-            // console.log(response)
+            
 
         } catch (error) {
-            // console.log(error)
+           
             setError(error?.data?.message)
 
 
@@ -109,11 +109,7 @@ function index() {
                 cancel={() => setItem(initialState)}
                 item={item}
                 body={<div className='gap-y-2  flex w-full flex-col'>{item.mode}
-                    <div className="flex gap-2">
-                        <Input label="Amount" required name="amount" value={item.name} onChange={handleChange} />
-                    </div>
-
-                    <div className="flex gap-x-2">
+                 <div className="flex gap-x-2">
                         <SelectInput label="Student" searches="students" required value_holder="_id" handleChange={(e) => {
                             setItem(((prev) => ({
                                 ...prev, student: e, student_name: students.results.results.find(item => item._id === e)["name"]
@@ -122,6 +118,11 @@ function index() {
                             lable_holder="name" options={studentsSuccess && students !== undefined ? students.results.results : []} />
 
                     </div>
+                    <div className="flex gap-2">
+                        <Input label="Amount" required name="amount" value={item.name} onChange={handleChange} />
+                    </div>
+
+                   
                     <div className="flex gap-x-2">
                         <SelectInput label="Mode" searches="modes" required value_holder="_id" handleChange={(e) => {
                             setItem(((prev) => ({
@@ -142,7 +143,7 @@ function index() {
 
 
                 </div>}
-                name="Instructor" setPopUp={setPopUp} />}
+                name="Payment" setPopUp={setPopUp} />}
 
             {show && <Delete_Modal
                 item={item}

@@ -1,17 +1,13 @@
 // NavbarContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 
 const NavbarContext = createContext();
 
-export const useNavbar = () => {
-  return useContext(NavbarContext);
-};
-
 export const NavbarProvider = ({ children }) => {
-  const [collapsed, setSidebarCollapsed] = useState(false);
+  const [collapsed, setcollapsed] = useState(false);
 
   const toggleNavbar = () => {
-    setSidebarCollapsed(prevState => !prevState);
+    setcollapsed(prev => !prev);
   };
 
   return (
@@ -19,4 +15,8 @@ export const NavbarProvider = ({ children }) => {
       {children}
     </NavbarContext.Provider>
   );
+};
+
+export const useNavbar = () => {
+  return React.useContext(NavbarContext);
 };

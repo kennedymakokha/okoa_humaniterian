@@ -11,29 +11,37 @@ const Item = ({ label, value }) => {
 function Bio({ details }) {
     return (
         <div className='flex p-2 w-full  flex-col  '>
-            <span className="font-semibold text-slate-600 ">Contact Information</span>
+            <div className="flex items-center justify-center border-b border-purple-300">
+            <span className="font-bold text-xl text-purple-600 ">Contact Information</span>
+            </div>
+           
             <div className="flex w-full">
-                <div className="flex w-1/2 p-2 flex-col">
-                    <span className="underline">Personal contact</span>
+                <div className="flex w-1/3 p-2 flex-col">
+
+                    <span className="font-semibold text-purple-400">Personal contact</span>
                     <Item value={details.name} label="Name" />
                     <Item value={details.phone_number} label="phone" />
                     <Item value={details.email} label="email" />
                     <Item value={details?.course?.course_name} label="Course" />
                     <Item value={details.ID_no} label="ID No" />
                 </div>
-                {details.role === "student" && <div className="flex w-1/2 p-2 border-l flex-col">
-                    <span className="underline">Guardian contact</span>
+                {details.role === "student" && <div className="flex w-1/3 p-2 border-l flex-col">
+                    <span className="font-semibold text-purple-400">Guardian contact</span>
                     <Item value={details?.guardian?.name} label="Name" />
                     <Item value={details?.guardian?.phone_number} label="phone" />
                     <Item value={details?.guardian?.address} label="Address" />
                     <Item value={details?.guardian?.relationship} label="ID No" />
                 </div>}
+                {details.role === "student" && <div className="flex w-1/3 p-2 border-l flex-col">
+                    <span className="font-semibold text-purple-400 ">Personal Information</span>
+                    <Item value={details.gender} label="Gender" />
+                    {details.role === "student" && <Item value={calculateAge(details.dob)} label="age" />}
+                    <Item value="Kenyan" label="Nationality" />
+                    {details.role === "student" && <Item value={details?.state} label="Parental State" />}
+
+                </div>}
             </div>
-            <span className="font-semibold text-slate-600 ">Personal Information</span>
-            <Item value={details.gender} label="Gender" />
-            {details.role === "student" && <Item value={calculateAge(details.dob)} label="age" />}
-            <Item value="Kenyan" label="Nationality" />
-            {details.role === "student" && <Item value={details?.state} label="Parental State" />}
+
 
         </div>
     )

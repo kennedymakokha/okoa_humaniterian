@@ -11,9 +11,11 @@ import Login from "./login";
 import { useLogoutMutation } from "../features/slices/usersApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/slices/authSlice";
+import { NavbarProvider, useNavbar } from "../context/sideBar.context";
 // import { Bars3Icon } from "@heroicons/react/24/outline";
 const Layout = (props) => {
-    const [collapsed, setSidebarCollapsed] = useState(false);
+    // const [collapsed, setSidebarCollapsed] = useState(false);
+    const { collapsed, toggleNavbar } = useNavbar();
     const location = useLocation();
 
     const { userInfo } = useSelector((state) => state.auth)
@@ -21,11 +23,7 @@ const Layout = (props) => {
     const navigate = useNavigate()
     const [logoutApiCall] = useLogoutMutation();
     const dispatch = useDispatch()
-    useEffect(() => {
-        if (location.pathname === "/students")
-            // alert('here')
-            setSidebarCollapsed(true)
-    }, [])
+
     const LogOutHandler = async () => {
         try {
             // await logoutApiCall({ token: "token" }).unwrap()
@@ -37,7 +35,7 @@ const Layout = (props) => {
     }
 
     return (
-        <>
+        < >
             {location.pathname === "/login" ? <Login /> :
                 <div
                     className={classNames({
@@ -47,16 +45,17 @@ const Layout = (props) => {
                         "grid-cols-sidebar": !collapsed,
                         "grid-cols-sidebar-collapsed": collapsed,
                         // 👇 transition animation classes
-                        
+
                         "transition-[grid-template-columns]  duration-300 ease-in-out": true,
                     })}
                 >
                     {/* sidebar */}
+
                     <Sidebar navItems={MenuItems} collapsed={collapsed} setCollapsed={() => setSidebarCollapsed(prev => !prev)} />
 
                     {/* content */}
                     <div className="bg-gray-50">
-                        <div  className="flex w-full h-[10.5%] bg-[rgb(101,12,174)] shadow-2xl rounded-tr-md  px-2 items-center justify-end ">
+                        <div className={`flex w-full ${collapsed ? "h-[8%]" : "h-[10%]"} bg-[rgb(101,12,174)] shadow-2xl  px-2 items-center justify-end`}>
                             <span onClick={() => LogOutHandler()} className="bg-white cursor-pointer flex pointe items-center  gap-x-2 px-3 py-2 text-red-600 text-[14px] rounded-md shadow-2xl">
                                 <img src={Logout} alt="" className="w-5 h-5" />
                                 Logout</span>

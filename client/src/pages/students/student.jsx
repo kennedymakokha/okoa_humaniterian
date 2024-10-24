@@ -89,7 +89,6 @@ function Student() {
                                 <Button key={i} toggleState={() => toggleState(menu.title)} title={menu.title} state={menu.state} />
                             ))}
                         </div>
-
                     </div>
 
                 </div>

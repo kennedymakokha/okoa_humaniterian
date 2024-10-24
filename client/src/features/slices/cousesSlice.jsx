@@ -14,6 +14,13 @@ export const CourseApiSlice = apiSlice.injectEndpoints({
         fetch_courses: builder.query({
             query: () => `${USER_URL}`
         }),
+        update_course: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/${data._id}`,
+                method: "PUT",
+                body: data
+            })
+        }),
         delete_course: builder.mutation({
             query: (id) => ({
                 url: `${USER_URL}/${id}`,
@@ -24,4 +31,4 @@ export const CourseApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useCreate_courseMutation,useDelete_courseMutation, useFetch_coursesQuery } = CourseApiSlice
+export const { useCreate_courseMutation,useUpdate_courseMutation, useDelete_courseMutation, useFetch_coursesQuery } = CourseApiSlice
