@@ -7,7 +7,7 @@ import { Sidebar } from "./sidebarItem";
 import { MenuItems } from './menuItems.json'
 // import { Bars3Icon } from "@heroicons/react/24/outline";
 const SideBar = (props) => {
-  const [collapsed, setSidebarCollapsed] = useState(false);
+  const [collapsed, setSidebarCollapsed] = useState(true);
   return (
     <div
       className={classNames({

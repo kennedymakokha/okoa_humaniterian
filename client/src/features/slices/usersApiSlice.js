@@ -72,6 +72,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USER_URL}/${id}`
             })
         }),
+        fetch_count: builder.query({
+            query: () => ({
+                url: `${USER_URL}/count`
+            })
+        }),
 
         activate: builder.mutation({
             query: (data) => ({
@@ -117,4 +122,4 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useLoginMutation, useEnrollUserMutation, usePost_guardianMutation, useUpdate_userMutation, useDelete_userMutation, useResetPassMutation, useRecoverPassMutation, useResendactivateMutation, useActivateMutation, useGet_usersQuery, useEditUserDetailsMutation, useLogoutMutation, usePost_userMutation, useGetuserQuery, useFetchuserQuery } = usersApiSlice
+export const { useLoginMutation, useFetch_countQuery, useEnrollUserMutation, usePost_guardianMutation, useUpdate_userMutation, useDelete_userMutation, useResetPassMutation, useRecoverPassMutation, useResendactivateMutation, useActivateMutation, useGet_usersQuery, useEditUserDetailsMutation, useLogoutMutation, usePost_userMutation, useGetuserQuery, useFetchuserQuery } = usersApiSlice

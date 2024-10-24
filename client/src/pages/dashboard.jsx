@@ -1,13 +1,17 @@
 import React from 'react'
-import { Assignment, Query } from '../components/sidebar/images'
+import { Assignment, } from '../components/sidebar/images'
 import Admission from './charts/admission'
+import { Link, } from 'react-router-dom'
 
-
-const CardOne = ({ from, to, color, title, icon, url, grad }) => {
+import { useFetch_countQuery } from './../features/slices/usersApiSlice';
+const CardOne = ({ from, to, color, count, title, icon, url, grad }) => {
     return (
         <div className={` shrink-0 w-[25%] h-24 px-1 `}>
             <div className={` shrink-0 w-full h-24 rounded-md shadow-2xl items-center justify-center flex flex-col ${to} ${from} bg-gradient-to-${grad}   `}>
 
+                <Link to={url} className={`flex cursor-pointer font-bold items-center justify-center bg-purple-200 text-[20px] size-10 rounded-tl-md rounded-br-md shadow-3xl`}>
+                    {count}
+                </Link>
                 <h2 className="text-white font-bold capitalize">
                     {title}
                 </h2>
@@ -25,16 +29,27 @@ const DetailItem = ({ title, value }) => {
     )
 }
 function Dashboard() {
+
+    const { data } = useFetch_countQuery()
+
     return (
         <div className='p-2'>
+           
             <div className="flex h-[280px] w-full ">
                 <div className="flex flex-col w-3/4 ">
                     <div className="flex  w-full flex-wrap ">
-                        <CardOne from="from-indigo-700" to=" to-indigo-400" color="indigo" grad='l' title="open Queries" icon={Query} url="" />
-                        <CardOne from="from-green-700" to=" to-green-400" color="green" grad='r' title="assignments" icon={Assignment} url="" />
-                        <CardOne from="from-red-700" to=" to-red-400" color="red" grad='r' title="Projects" icon="" url="" />
-                        <CardOne from="from-slate-700" to=" to-slate-400" color="slate" grad='l' title="sports" icon="" url="" />
-
+                        <CardOne from="from-indigo-700" to="to-indigo-400" color="red" grad='r' title="Students" icon="" url="students"
+                            count={data?.students}
+                        />
+                        <CardOne from="from-yellow-700" to="to-yellow-400" color="red" grad='r' title="Courses" icon="" url="courses"
+                            count={data?.courses}
+                        />
+                        <CardOne from="from-green-700" to="to-green-400" color="green" grad='r' title="Instructors" icon={Assignment} url="instructors"
+                            count={data?.instructors}
+                        />
+                        <CardOne from="from-red-700" to="to-red-400" color="red" grad='r' title="Sponsors" icon="" url=""
+                            count={data?.sponsors}
+                        />
                     </div>
                     <div className='w-full p-2 h-40'>
                         <div className="flex w-1/2 px-2">
@@ -44,9 +59,6 @@ function Dashboard() {
                         </div>
                         <div className="flex w-1/2 px-2"></div>
                     </div>
-
-
-
                 </div>
                 <div className="flex w-1/4 border flex-col rounded-t-md  h-full">
                     <div className="flex w-full h-[45%]  bg-red-100 flex-col items-center justify-center">

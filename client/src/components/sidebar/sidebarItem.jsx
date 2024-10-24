@@ -84,10 +84,16 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
                                     })}
                                 >
                                     <Link to={item.url} className="flex gap-2 capitalize items-center">
+                                        <div className=" group size-6 relative z-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6`}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                                            </svg>
+                                            <div className="absolute hidden size-6   group-hover:flex inset-0 flex justify-center items-center z-10">
+                                                <div className="flex  p-2 bg-purple-600 rounded-md text-white uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
+                                                
+                                            </div>
+                                        </div>
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6`}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-                                        </svg>
                                         <span>{!collapsed && item.title}</span>
                                     </Link>
                                 </li>
@@ -111,9 +117,9 @@ export const Sidebar = ({ collapsed, navItems, setCollapsed }) => {
                         {!collapsed && (
                             <div className="flex  flex-col">
                                 <span className="text-purple-50 my-0 uppercase text-[12px]">{userInfo?.name}</span>
-                                {/* <Link href="/" className="text-purple-200 text-sm">
+                                <Link to="/" className="text-purple-200 text-sm">
                                     View Profile
-                                </Link> */}
+                                </Link>
                             </div>
                         )}
                     </div>

@@ -10,8 +10,8 @@ import { setCredentials } from './../features/slices/authSlice';
 
 function Login() {
     let location = useLocation()
+    const { userInfo } = useSelector((state) => state.auth)
 
-    // console.log(location.search.split("=")[1])
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const [login, isFetching, error,] = useLoginMutation();
@@ -40,6 +40,11 @@ function Login() {
     useEffect(() => {
         if (location.search.split("=")[1] !== "1213") {
             setDisable(true)
+        }
+    }, [])
+    useEffect(() => {
+        if (userInfo !== null) {
+            navigate('/')
         }
     }, [])
 

@@ -39,13 +39,14 @@ function index() {
     const [item, setItem] = useState(initialState)
     const [nextOfKin, setNextOfKin] = useState(newguardian)
     const columns = [
+        { Header: 'Adm', accessor: 'adm_no' },
         { Header: 'name', accessor: 'name' },
         { Header: 'Phone Number', accessor: 'phone_number' },
-        { Header: 'Email Address', accessor: 'address' },
+       
         { Header: 'Identificaton', accessor: 'ID_no' },
         { Header: 'gender', accessor: 'gender' },
         { Header: 'Date of Birth', accessor: 'dob' },
-        // { Header: 'Course Taking', accessor: 'course' },
+       
     ];
     const { data: courses, isLoading, isSuccess: cousrsesSuccess } = useFetch_coursesQuery()
     const [Post_user] = usePost_userMutation()
@@ -166,14 +167,14 @@ function index() {
                         }]} required value={item.course} handleChange={(e) => setItem(((prev) => ({
                             ...prev, gender: e.target.value
                         })))} />
-                        <SelectContainer key_name="course_name" label="Course"  array={cousrsesSuccess && courses !== undefined ? courses : []} required name="Course" value={item.course} handleChange={(e) => {
+                        <SelectContainer key_name="course_name" label="Course" array={cousrsesSuccess && courses !== undefined ? courses : []} required name="Course" value={item.course} handleChange={(e) => {
                             setItem(((prev) => ({
                                 ...prev, course: e.target.value, course_name: courses.find(item => item._id === e.target.value)["course_name"]
                             })))
                         }} />
                     </div>
                     <div className="flex gap-x-2">
-                        <SelectContainer key_name="name"   label="" array={[
+                        <SelectContainer key_name="name" label="" array={[
                             {
                                 name: "Both Parents Alive", _id: "parented"
                             }, {
@@ -182,7 +183,7 @@ function index() {
                                 name: "Total Orphan", _id: "total-orphan"
                             }, {
                                 name: "Abandoned", _id: "abandoned"
-                            }]} required name="State"  value={item.course} handleChange={(e) => setItem(((prev) => ({
+                            }]} required name="State" value={item.course} handleChange={(e) => setItem(((prev) => ({
                                 ...prev, state: e.target.value
                             })))} />
                         <Input label="DOB" required name="dob" type="date" value={item.dob} onChange={handleChange} />
@@ -205,7 +206,7 @@ function index() {
                     </div>
                     <div className="flex gap-x-2">
                         <Input label="Address" name="address" value={nextOfKin.address} onChange={handleNXTChange} />
-                        <SelectContainer  key_name="name" label="" array={[
+                        <SelectContainer key_name="name" label="" array={[
                             {
                                 name: "Parent", _id: "parent"
                             }, {

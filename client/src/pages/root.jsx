@@ -48,7 +48,7 @@ const Layout = (props) => {
                         "grid-cols-sidebar-collapsed": collapsed,
                         // 👇 transition animation classes
                         
-                        "transition-[grid-template-columns] duration-300 ease-in-out": true,
+                        "transition-[grid-template-columns]  duration-300 ease-in-out": true,
                     })}
                 >
                     {/* sidebar */}
