@@ -7,7 +7,7 @@ import { Paginator } from './Paginator';
 import { exportToExcel } from '../helperFunc';
 import { useNavbar } from '../context/sideBar.context';
 import { Repeat } from '../pages/ext.func.js';
-const Table = ({ columns, noAdd, noAction, notLinkable, enrolUser, data, setFilter, notdetailed, page, title, paginate, filter, isLoading, key_column, setShow, setItem, setPopUp }) => {
+const Table = ({ columns, noAdd, otherAction, noAction, notLinkable, enrolUser, data, setFilter, notdetailed, page, title, paginate, filter, isLoading, key_column, setShow, setItem, setPopUp }) => {
     const location = useLocation();
     const { collapsed, toggleNavbar } = useNavbar();
     const setLimit = async (e) => {
@@ -47,7 +47,7 @@ const Table = ({ columns, noAdd, noAction, notLinkable, enrolUser, data, setFilt
                                 {column.Header}
                             </th>
                         ))}
-                        {!noAction && <th
+                        {<th
                             className="py-2 px-4 border-b  text-[18px] border-gray-200 text-left text-gray-600"
                         >
                             Action
@@ -80,6 +80,13 @@ const Table = ({ columns, noAdd, noAction, notLinkable, enrolUser, data, setFilt
                                         >{row[column.accessor]}</Link>
                                     </td>
                                 ))}
+                                {otherAction && <td className="py-1 text-start  px-4  flex items-center  justify-center border-b border-l border-gray-200  ">
+                                    <div onClick={() => { setPopUp(true); setItem(row); }} className=' w-14 h-full border-purple-500 font-bold cursor-pointer capitalize  text-purple-700 py-1 border  flex items-center justify-center rounded-md'>
+                                        {otherAction}
+                                    </div>
+
+
+                                </td>}
                                 {!noAction && <td className="py-2 text-start  px-4 border-b border-l border-gray-200  text-gray-800">
                                     <div className="flex gap-2 ">
                                         <div onClick={() => { setShow(true); setItem(row); }} className=' w-14 border-red-500  p-2 border  flex items-center justify-center rounded-md'>

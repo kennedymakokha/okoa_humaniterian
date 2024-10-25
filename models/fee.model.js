@@ -10,7 +10,8 @@ const FeeSchema = new Schema({
     },
     arrears: {
         type: Number,
-    },
+    }, 
+    
     student: {
         type: Schema.Types.ObjectId,
         ref: "user_tb",

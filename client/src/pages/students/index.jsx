@@ -178,7 +178,7 @@ function index() {
                             }]} required name="State" value={item.course} handleChange={(e) => setItem(((prev) => ({
                                 ...prev, state: e.target.value
                             })))} />
-                        <Input label="DOB" required name="dob" type="date" value={item.dob} onChange={handleChange} />
+                        <Input label="DOB" required name="dob" type="date" min="2008-01-01" value={item.dob} onChange={handleChange} />
                     </div>
                 </div>}
                 name="Student" setPopUp={setPopUp} />}

@@ -5,16 +5,9 @@ import TimeTable from './timetable'
 import Bio from './bio'
 import Practicals from './reports/practicals'
 import Finances from './reports/finance'
+import TabBatton from '../../components/tabBatton'
 
 
-
-const Button = ({ title, state, child, toggleState }) => {
-    return (
-        <div onClick={toggleState} className={`flex capitalize font-bold rounded-md h-full  ${state ? "border-b-[4px] bg-purple-100" : ""} shadow-2xl ${child ? "text-red-400 border" : " text-slate-500  border-[rgb(101,12,174)]"}  items-center  px-2 justify-center   gap-x-20`}>
-            {title}
-        </div>
-    )
-}
 
 function Student() {
     const location = useLocation()
@@ -84,9 +77,9 @@ function Student() {
                         <h2 className='font-bold uppercase'>{details.name} </h2>
                         <span className=" text-sm text-[rgb(101,12,174)] font-semibold capitalize">{details?.role}</span>
                         <Ratings small row width={5} count={Math.random() * (5 - 0) + 0} />
-                        <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-4">
+                        <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-0">
                             {arr.map((menu, i) => (
-                                <Button key={i} toggleState={() => toggleState(menu.title)} title={menu.title} state={menu.state} />
+                                <TabBatton key={i} toggleState={() => toggleState(menu.title)} title={menu.title} state={menu.state} />
                             ))}
                         </div>
                     </div>
@@ -94,9 +87,9 @@ function Student() {
                 </div>
 
             </div>
-            {menus.find(item => item.state === true).title === "Report" && <div className="flex w-full h-10 mt-8  gap-x-4">
+            {menus.find(item => item.state === true).title === "Report" && <div className="flex w-full h-10 mt-8  gap-x-0">
                 {reportarr.map((menu, i) => (
-                    <Button child key={i} toggleState={() => setReportMenus(prevItems =>
+                    <TabBatton child key={i} toggleState={() => setReportMenus(prevItems =>
                         prevItems.map(item => ({
                             ...item,
                             state: item.title === menu.title // Set the state to true if the title matches, else false

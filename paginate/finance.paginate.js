@@ -34,10 +34,40 @@ const paginated = (model) => {
 
         try {
 
-            var { word } = req.query
+            var { word, student, form } = req.query
             var searchKey = new RegExp(`${word}`, 'i')
+            console.log(form)
+            if (student) {
+                results.results = await model.find({ student: student, deletedAt: null }).limit(limit).skip(startIndex)
+                    .populate('createdBy', 'name')
+                    .populate('student', 'name')
+                    .sort({ 'createdAt': -1 })
+                    .select(" -deletedAt ")
+
+                    .exec()
+                res.paginate = { results }
+                console.log(results)
+                next()
+
+            }
+            if (form) {
+                results.results = await model.find({ for: form, deletedAt: null }).limit(limit).skip(startIndex)
+                    .populate('createdBy', 'name')
+                    .populate('student', 'name')
+                    .sort({ 'createdAt': -1 })
+                    .select(" -deletedAt ")
+
+                    .exec()
+                res.paginate = { results }
+                console.log(results)
+                next()
+
+            }
+
+
+
             if (word) {
-                results.results = await model.find({ deletedAt: null, $or: [{ receipt: searchKey }, { mode: searchKey },{ student_name: searchKey }] }).limit(limit).skip(startIndex)
+                results.results = await model.find({ deletedAt: null, $or: [{ receipt: searchKey }, { mode: searchKey }, { student_name: searchKey }] }).limit(limit).skip(startIndex)
                     .populate('createdBy', 'name')
                     .populate('student', 'name')
                     .sort({ 'createdAt': -1 })
@@ -48,7 +78,7 @@ const paginated = (model) => {
                 next()
 
             }
-          
+
             else {
                 results.results = await model.find({ deletedAt: null }).limit(limit).skip(startIndex)
                     .populate('createdBy', 'name')

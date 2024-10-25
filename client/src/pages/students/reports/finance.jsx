@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
 import Table from '../../../components/table';
 import { useLocation } from 'react-router-dom';
-import daysjs from  'dayjs'
+import daysjs from 'dayjs'
 import { useFetch_user_financesQuery } from '../../../features/slices/financeSlice';
 
 function Finances({ data1 }) {
 
     const columns = [
-
         { Header: 'Amount', accessor: 'amount' },
         { Header: 'Mode Of payment', accessor: 'mode' },
         { Header: 'Receipt', accessor: 'receipt' },
         { Header: 'Date', accessor: `createdAt` },
-
     ];
 
     const [filter, setFilter] = useState({
@@ -25,7 +23,7 @@ function Finances({ data1 }) {
     })
     const { data, isLoading, isSuccess, refetch } = useFetch_user_financesQuery(filter)
 
-
+    console.log(data?.results?.results)
     return (
         <>
             <Table notLinkable noAction noAdd isLoading={isLoading} key_column="student_name" columns={columns} title={`Fee Statement`} data={isSuccess && data !== undefined ? data.results.results

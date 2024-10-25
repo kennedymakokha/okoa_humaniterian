@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 
-function Input({ label, required, value, disable, name, type, onChange }) {
+function Input({ label, min, required, value, disable, name, type, onChange }) {
   const [show, setShow] = useState(false);
   return (
     <div className="flex w-full px-2 items-center gap-x-2 rounded-md border md:border-slate-200 border-purple-800">
@@ -13,6 +13,7 @@ function Input({ label, required, value, disable, name, type, onChange }) {
         )}
       </div>
       <input
+        max={min}
         name={name}
         disabled={disable}
         type={type === "password" && show ? "text" : type ? type : "text"}
@@ -88,30 +89,30 @@ export const SelectContainer = ({
   return (
     <div className={`rounded-md flex justify-between  appearance-none relative block w-full px-3 py-1 border  
     }border-gray-300 items-center placeholder-gray-500 text-gray-500 focus:outline-none focus:ring-secondary-100 focus:border-secondary-100 focus:z-10 sm:text-[18px] text-sm`}
-  >
-    
+    >
+
       <select
         className={`rounded-md  appearance-none relative block w-[90%]    
         } placeholder-gray-500 py-2 text-gray-500 focus:outline-none focus:ring-secondary-100  focus:z-10 sm:text-[18px] text-sm`}
         onChange={handleChange}
       >
         <option value="">Select {name}
-        </option>  
+        </option>
         {array?.map((arr, i) => (
           <option
             key={i}
             value={arr["_id"]}
             onMouseEnter={() => handleMouseEnter(arr[key_name])}
             onMouseLeave={handleMouseLeave}
-           
+
           >
             {arr[key_name]}
           </option>
         ))}
       </select>
       {required === true && (
-            <span className="text-red-500 w-[9%] px-2 text-bold">* </span>
-          )}
+        <span className="text-red-500 w-[9%] px-2 text-bold">* </span>
+      )}
     </div>
   );
 };

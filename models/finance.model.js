@@ -8,8 +8,20 @@ const FinanceSchema = new Schema({
         type: Number,
         default: 0
     },
+
     mode: {
         type: String,
+        enum: ["mpesa", "cash", "bank"],
+        default: "parcashent"
+    },
+    for: {
+        type: String,
+        enum: ["fee", "electricity", "internent"],
+        default: "fee"
+    },
+    validity: {
+        type: Date,
+        default: Date()
     },
     receipt: {
         type: String,

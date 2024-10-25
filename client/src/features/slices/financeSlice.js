@@ -6,7 +6,7 @@ export const financeSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         fetch_user_finances: builder.query({
             query: (data) => ({
-                url: `${USER_URL}/${data.id}?word=${data.word}`
+                url: `${USER_URL}/payment-history?word=${data.word}&student=${data.id}&form=${data.form}`
             })
         }),
         get_users_finances: builder.query({

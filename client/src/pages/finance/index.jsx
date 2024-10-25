@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Table from '../../components/table';
-import Modal from '../../components/modals/delete_modal';
 import Create_Modal from '../../components/modals/create_modal';
 import Input, { SelectContainer } from '../../components/modals/input';
-import Delete_Modal from '../../components/modals/delete_modal';
-import { useFetch_coursesQuery } from '../../features/slices/cousesSlice';
-import { useDelete_userMutation, useGet_usersQuery, usePost_guardianMutation, usePost_userMutation, useUpdate_userMutation } from '../../features/slices/usersApiSlice';
+import { useGet_usersQuery } from '../../features/slices/usersApiSlice';
 import { useLocation } from 'react-router-dom';
 import { useGet_users_financesQuery, useUpdate_user_financesMutation } from '../../features/slices/financeSlice';
 import SelectInput from '../../components/SelectInput';
+import TabBatton from '../../components/tabBatton';
 
 function index() {
     const [popUp, setPopUp] = useState(false)
@@ -20,7 +18,7 @@ function index() {
     const initialState = {
         amount: "",
         student: "",
-        receipt:"",
+        receipt: "",
         mode: "",
         student_name: "",
 
@@ -42,13 +40,32 @@ function index() {
         pageNumber: 0,
         role: "student",
         word: "",
-        course: ""
+        course: "",
+        for: "fee"
     })
 
-    const [Post_user] = usePost_userMutation()
+
     const [Post_Fees] = useUpdate_user_financesMutation()
-    const [delete_user,] = useDelete_userMutation()
-    const [UpdateUser] = useUpdate_userMutation()
+
+    const [menus, setMenu] = useState([
+        {
+            title: "home",
+            state: true
+        },
+        {
+            title: "fee",
+            state: false
+        },
+        {
+            title: "electricity",
+            state: false
+        },
+        {
+            title: "internet",
+            state: false
+        }
+    ])
+    let tabTitle = menus.filter(item => item.state)[0]['title']
     const [filter, setFilter] = useState({
         page: 1, limit: 7,
         activeTab: 1,
@@ -56,60 +73,69 @@ function index() {
         role: role,
         course: "",
         word: "",
+        form: tabTitle
 
     })
-    const { data, refetch, isSuccess, } = useGet_users_financesQuery(filter)
 
+    const { data, refetch, isSuccess, } = useGet_users_financesQuery(filter)
 
     const handleChange = (e, name) => {
         setItem(((prev) => ({
             ...prev, [name]: e
         })))
     }
+    const showMoadal = (data) => {
+        if (data) {
+            setItem({
+                student: data._id,
+                student_name: data.student_name,
+            })
+        }
+        setPopUp(true)
+    }
 
     const submit = async () => {
         try {
-            let response = await Post_Fees(item).unwrap()
+            if (item._id) {
+                item.student = item.student._id
+                delete item._id
+            }
+            await Post_Fees(item).unwrap()
             setPopUp(false)
 
             await refetch()
-            // setItem(initialState)
-            
-
-        } catch (error) {
-           
-            setError(error?.data?.message)
-
-
-        }
-
-
-    }
-
-    const deleteUser = async () => {
-        try {
-            await delete_user(item._id).unwrap()
-            await refetch()
             setItem(initialState)
-            setShow(false)
         } catch (error) {
-            console.log(error)
+            setError(error?.data?.message)
         }
     }
+
 
     return (
         <>
-            <Table noAction isLoading={isLoading} key_column="student_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Accounts" data={isSuccess && data !== undefined ? data.results.results
+
+            <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-0">
+                {menus.map((menu, i) => (
+                    <TabBatton key={i} toggleState={() => setMenu(prevItems =>
+                        prevItems.map(item => ({
+                            ...item,
+                            state: item.title === menu.title // Set the state to true if the title matches, else false
+                        }))
+                    )} title={menu.title} state={menu.state} />
+                ))}
+            </div>
+            <Table noAction otherAction="pay" isLoading={isLoading} key_column="student_name" columns={columns} openModal={showMoadal} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title={`${tabTitle}`} data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
             {popUp && <Create_Modal
                 error={error}
                 submit={submit}
+                disable={item._id}
                 cancel={() => setItem(initialState)}
                 item={item}
                 body={<div className='gap-y-2  flex w-full flex-col'>{item.mode}
-                 <div className="flex gap-x-2">
+                    {item._id === undefined && <div className="flex gap-x-2">
                         <SelectInput label="Student" searches="students" required value_holder="_id" handleChange={(e) => {
                             setItem(((prev) => ({
                                 ...prev, student: e, student_name: students.results.results.find(item => item._id === e)["name"]
@@ -117,39 +143,32 @@ function index() {
                         }}
                             lable_holder="name" options={studentsSuccess && students !== undefined ? students.results.results : []} />
 
-                    </div>
+                    </div>}
                     <div className="flex gap-2">
                         <Input label="Amount" required name="amount" value={item.name} onChange={handleChange} />
                     </div>
 
-                   
+
                     <div className="flex gap-x-2">
-                        <SelectInput label="Mode" searches="modes" required value_holder="_id" handleChange={(e) => {
-                            setItem(((prev) => ({
-                                ...prev, mode: e,
-                            })))
-                        }}
-                            lable_holder="name" options={[{
-                                name: "M-Pesa", _id: "mpesa"
-                            }, {
-                                name: "Bank Transfare", _id: "bank"
-                            }, {
-                                name: "Cash", _id: "cash"
-                            }]} />
+                        <SelectContainer key_name="name" label="" array={[{
+                            name: "M-Pesa", _id: "mpesa"
+                        }, {
+                            name: "Bank Transfare", _id: "bank"
+                        }, {
+                            name: "Cash", _id: "cash"
+                        }]} required name="Mode" value={item.mode} handleChange={(e) => setItem(((prev) => ({
+                            ...prev, mode: e.target.value
+                        })))} />
+
                     </div>
                     {item.mode === "mpesa" && <div className="flex gap-2">
-                        <Input label="Receipt"  name="receipt" value={item.receipt} onChange={handleChange} />
+                        <Input label="Receipt" name="receipt" value={item.receipt} onChange={handleChange} />
                     </div>}
 
 
                 </div>}
                 name="Payment" setPopUp={setPopUp} />}
 
-            {show && <Delete_Modal
-                item={item}
-                submit={deleteUser}
-                cancel={() => setItem(initialState)}
-                name="Course" setPopUp={setShow} />}
         </>
 
     )

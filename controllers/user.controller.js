@@ -22,6 +22,16 @@ export const get_users = expressAsyncHandler(async (req, res) => {
 
 export const create_user = expressAsyncHandler(async (req, res) => {
     try {
+        const latestRecord = await User.find({ role: "student" }).sort({ createdAt: -1 }).limit(1);
+        let newNumber
+        if (latestRecord[0]?.adm_no === undefined) {
+            newNumber = 1
+        } else {
+           let str = latestRecord[0].adm_no.split("/");
+            newNumber = parseInt(str[2]) + 1
+        }
+        const admi_no = newNumber.toString().padStart(4, '0');
+     
         if (!req.body.password) {
             req.body.password = `Af${req.body.phone_number}!`
             req.body.confirm_password = `Af${req.body.phone_number}!`
@@ -45,15 +55,18 @@ export const create_user = expressAsyncHandler(async (req, res) => {
 
         req.body.createdBy = req.user._id
         req.body.verification_code = MakeActivationCode(5);
-        req.body.adm_no = `2024/${MakeActivationCode(4)}`;
+        req.body.adm_no = `OHO/2024/${admi_no}`
         req.body.hashPassword = bcrypt.hashSync(req.body.password, 10);
         let data = await User.create(req.body)
-        await Fee.create({
-            student: data._id,
-            student_name: data.name,
-            arrears: course.course_price,
-            createdBy: req.user._id
-        })
+        if (req.body.role === "student") {
+            req.body.validity = ValidityFunc(Date(), course.course_duration)
+            await Fee.create({
+                student: data._id,
+                student_name: data.name,
+                arrears: course.course_price,
+                createdBy: req.user._id
+            })
+        }
         return res.status(200).json(data._id)
     } catch (error) {
         console.log(error)
@@ -143,13 +156,13 @@ export const create_guardian = expressAsyncHandler(async (req, res) => {
 
 export const count_everything = expressAsyncHandler(async (req, res) => {
     try {
-        let users = await User.find({deletedAt:null})
-        let courses = await Course.find({deletedAt:null})
+        let users = await User.find({ deletedAt: null })
+        let courses = await Course.find({ deletedAt: null })
 
         const RoleUsers = (str) => {
             return users.filter((user) => user.role === str).length
         }
-        return res.status(200).json({ students: RoleUsers('student'), instructors: RoleUsers('instructor'), admin: RoleUsers('admin') , sponsors: RoleUsers('Sponsors'),courses:courses.length })
+        return res.status(200).json({ students: RoleUsers('student'), instructors: RoleUsers('instructor'), admin: RoleUsers('admin'), sponsors: RoleUsers('Sponsors'), courses: courses.length })
     } catch (error) {
         console.log(error)
         return res.status(400).json({ message: 'Updated failed ' })
