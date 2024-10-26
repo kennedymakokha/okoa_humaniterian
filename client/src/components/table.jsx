@@ -18,8 +18,8 @@ const Table = ({ columns, noAdd, otherAction, noAction, notLinkable, enrolUser, 
         await refetch()
     }
     return (
-        <div className="overflow-x-auto  ">
-            <div className="flex w-full min-w-[900px] overflow-hidden items-center p-2 justify-between">
+        <div className=" ">
+            <div className="flex w-full min-w-[70hw] overflow-hidden items-center p-2 justify-between">
                 <div className='flex items-center justify-center'>
                     <h4 className='font-bold uppercase text-center text-indigo-700'>{title}</h4> {isLoading && <Loader />}
                 </div>
@@ -47,7 +47,12 @@ const Table = ({ columns, noAdd, otherAction, noAction, notLinkable, enrolUser, 
                                 {column.Header}
                             </th>
                         ))}
-                        {<th
+                        {!noAction && <th
+                            className="py-2 px-4 border-b  text-[18px] border-gray-200 text-left text-gray-600"
+                        >
+                            Action
+                        </th>}
+                        {otherAction && <th
                             className="py-2 px-4 border-b  text-[18px] border-gray-200 text-left text-gray-600"
                         >
                             Action

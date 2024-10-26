@@ -23,7 +23,6 @@ function Finances({ data1 }) {
     })
     const { data, isLoading, isSuccess, refetch } = useFetch_user_financesQuery(filter)
 
-    console.log(data?.results?.results)
     return (
         <>
             <Table notLinkable noAction noAdd isLoading={isLoading} key_column="student_name" columns={columns} title={`Fee Statement`} data={isSuccess && data !== undefined ? data.results.results

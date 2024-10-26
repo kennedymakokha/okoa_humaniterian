@@ -99,7 +99,7 @@ function Student() {
             </div>}
 
 
-            <div className="flex w-full p-2 ">
+            <div className="flex w-full p-2  ">
                 {menus.find(item => item.state === true).title === "timetable" && <TimeTable />}
                 {menus.find(item => item.state === true).title === "Bio" && <Bio details={details} />}
                 {menus.find(item => item.state === true).title === "Report" &&

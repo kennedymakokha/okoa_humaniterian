@@ -60,7 +60,10 @@ const Layout = (props) => {
                                 <img src={Logout} alt="" className="w-5 h-5" />
                                 Logout</span>
                         </div>
-                        <div className="px-4">  <Outlet /></div>
+                        <div className="px-4">
+                      
+                            <Outlet />
+                        </div>
 
                     </div>
                 </div>}

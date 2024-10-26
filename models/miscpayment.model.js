@@ -8,16 +8,14 @@ const FinanceSchema = new Schema({
         type: Number,
         default: 0
     },
-
     mode: {
         type: String,
         enum: ["mpesa", "cash", "bank"],
         default: "cash"
     },
-    for: {
+    payment_for: {
         type: String,
-        enum: ["fee", "electricity", "internent"],
-        default: "fee"
+        enum: ["electricity", "internent"],
     },
     validity: {
         type: Date,
@@ -40,5 +38,5 @@ const FinanceSchema = new Schema({
     },
 }, { timestamps: true });
 
-const Model = mongoose.model('payment_tb', FinanceSchema);
+const Model = mongoose.model('miscpayment_tb', FinanceSchema);
 export default Model

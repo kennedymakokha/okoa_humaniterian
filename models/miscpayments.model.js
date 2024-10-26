@@ -3,33 +3,27 @@ import bcrypt from 'bcryptjs'
 
 
 const Schema = mongoose.Schema;
-const FinanceSchema = new Schema({
+const MishisSchema = new Schema({
+    
+    student_name: {
+        type: String,
+    },
     amount: {
         type: Number,
-        default: 0
-    },
-
-    mode: {
-        type: String,
-        enum: ["mpesa", "cash", "bank"],
-        default: "cash"
-    },
-    for: {
-        type: String,
-        enum: ["fee", "electricity", "internent"],
-        default: "fee"
-    },
+    }, 
     validity: {
         type: Date,
         default: Date()
     },
-    receipt: {
+    payment_for: {
         type: String,
+        enum: [ "electricity", "internent"],    
     },
     student: {
         type: Schema.Types.ObjectId,
         ref: "user_tb",
     },
+    
     deletedAt: {
         type: String,
         default: null,
@@ -40,5 +34,5 @@ const FinanceSchema = new Schema({
     },
 }, { timestamps: true });
 
-const Model = mongoose.model('payment_tb', FinanceSchema);
+const Model = mongoose.model('misc_payment_history_tb', MishisSchema);
 export default Model
