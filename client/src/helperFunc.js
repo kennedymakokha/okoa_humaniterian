@@ -36,3 +36,14 @@ export const exportToExcel = (data,title) => {
     XLSX.writeFile(workbook, `${title.replace(/\s+/g, '')}.xlsx`);
     // XLSX.writeFile(workbook, 'UsersData.xlsx');
 };
+
+export function toSingular(word) {
+    if (word.endsWith('ies')) {
+        return word.slice(0, -3) + 'y'; // e.g., 'stories' -> 'story'
+    } else if (word.endsWith('es')) {
+        return word.slice(0, -2); // e.g., 'buses' -> 'bus'
+    } else if (word.endsWith('s')) {
+        return word.slice(0, -1); // e.g., 'dogs' -> 'dog'
+    }
+    return word; // If it doesn't match any rule
+}

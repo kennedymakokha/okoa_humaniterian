@@ -9,14 +9,14 @@ const Certificate = (user) => {
     console.log(name)
     return (
 
-        <div className="bg-purple-50 w-full h-[600px] relative z-0">
+        <div className="bg-blue-50 w-full h-[600px] relative z-0">
             {/* <p className="italic text-bold  font-serif">Map</p> */}
             <img src={Login_background} alt="" className="w-full h-full" />
             <div className="absolute inset-0 flex justify-center items-center z-10">
 
             </div>
             <div className="absolute  w-full h-full top-0 left-0 right-0 p-10 flex justify-center items-center z-10">
-                <div className="flex  shadow-2xl border border-[10px] border-[rgb(101,12,174)] rounded-md w-full h-full"></div>
+                <div className="flex  shadow-2xl border border-[10px] border-[#98daf8] rounded-md w-full h-full"></div>
             </div>
             <div className="absolute w-full h-full top-0 left-0 right-0 p-20 flex justify-center items-center z-10">
                 <div className="flex  bg-white shadow-2xl opacity-95 rounded-md w-full h-full"></div>
@@ -29,7 +29,7 @@ const Certificate = (user) => {
                             <span className="uppercase">of achievement</span>
                             {/* <div className="flex gap-x-3 items-center">
                                 <div className="flex w-2 h-2  shadow-2xl rounded-sm bg-red-300 rotate-[45deg]"></div>
-                                <div className="flex w-3 h-3  shadow-2xl rounded-sm bg-[rgb(101,12,174)] rotate-[45deg]"></div>
+                                <div className="flex w-3 h-3  shadow-2xl rounded-sm bg-[#98daf8] rotate-[45deg]"></div>
                                 <div className="flex w-2 h-2  shadow-2xl rounded-sm bg-red-300 rotate-[45deg]"></div>
                             </div> */}
                         </div>
@@ -53,7 +53,7 @@ const Certificate = (user) => {
 };
 
 
-{/* <h1 className='text-[rgb(101,12,174)] font-bold'>Certificate of Achievement</h1>
+{/* <h1 className='text-[#98daf8] font-bold'>Certificate of Achievement</h1>
 <p>This certifies that</p>
 <h2>{name}</h2>
 <p>has completed the course</p>

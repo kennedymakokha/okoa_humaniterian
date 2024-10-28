@@ -13,7 +13,7 @@ export const Sidebar = ({ navItems }) => {
     const navigate = useNavigate();
     let location = useLocation()
     useEffect(() => {
-        
+
         if (userInfo === null) {
             navigate('/login?id=1213')
             // if(userInfo.role === 'admin'){
@@ -31,7 +31,7 @@ export const Sidebar = ({ navItems }) => {
     return (
         <div
             className={cn({
-                "bg-[rgb(101,12,174)]  text-zinc-50 z-20": true,
+                "bg-[#98daf8]  text-zinc-50 z-20": true,
             })}
         >
             <div
@@ -42,18 +42,18 @@ export const Sidebar = ({ navItems }) => {
                 {/* logo and collapse button */}
                 <div
                     className={cn({
-                        "flex items-center  bg-[rgb(101,12,174)]    ": true,
+                        "flex items-center  bg-[#98daf8]    ": true,
                         "p-4 justify-between": !collapsed,
                         "py-4 justify-center": collapsed,
                     })}
                 >
                     {!collapsed && <span className="whitespace-nowrap flex items-center gap-x-2 text-white font-bold uppercase">
-                        <img src={Logo} alt=" " className={`${collapsed ? "size-6" : "size-10"}`} />
-                        Okoa CBO</span>}
+                        <img src={Logo} alt=" " className={`${collapsed ? "size-6 " : "size-10"} `} />
+                        HOMASY </span>}
                     <button
                         className={cn({
                             "grid place-content-center": true, // position
-                            "hover:bg-purple-200 ": true, // colors
+                            "hover:bg-blue-200 ": true, // colors
                             "w-10 h-10 rounded-full relative z-0": true, // shape
                         })}
                         // 👇 set the collapsed state on click
@@ -78,8 +78,8 @@ export const Sidebar = ({ navItems }) => {
                                 <li
                                     key={index}
                                     className={cn({
-                                        "bg-red-500":location.pathname===item.url,
-                                        "text-purple-100 hover:bg-purple-900 flex": true, //colors
+                                        "bg-blue-500 text-white": location.pathname === item.url,
+                                        "text-blue-800 hover:bg-blue-700 font-bold hover:text-blue-100 flex": true, //colors
                                         "transition-colors duration-300": true, //animation
                                         "rounded-md p-2 mx-3 gap-4 ": !collapsed,
                                         "rounded-full p-2 mx-3 w-10 h-10": collapsed,
@@ -91,7 +91,7 @@ export const Sidebar = ({ navItems }) => {
                                                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                                             </svg>
                                             <div className={`absolute left-10  hidden    ${collapsed && "group-hover:flex"} inset-0 flex justify-center items-center z-10`}>
-                                                <div className="flex shadow-2xl  items-center justify-center p-2 bg-slate-100 rounded-sm text-purple-700 uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
+                                                <div className="flex shadow-2xl  items-center justify-center p-2 bg-slate-100 rounded-sm text-blue-700 uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
 
                                             </div>
                                         </div>
@@ -118,8 +118,8 @@ export const Sidebar = ({ navItems }) => {
                         />
                         {!collapsed && (
                             <div className="flex  flex-col">
-                                <span className="text-purple-50 my-0 uppercase text-[12px]">{userInfo?.name}</span>
-                                <Link to="/" className="text-purple-200 text-sm">
+                                <span className="text-blue-50 my-0 uppercase text-[12px]">{userInfo?.name}</span>
+                                <Link to="/" className="text-blue-200 text-sm">
                                     View Profile
                                 </Link>
                             </div>

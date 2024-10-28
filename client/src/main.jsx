@@ -2,20 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-// import './../src/fonts/LexendDeca-VariableFont_wght.ttf'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-// import Errorpage from './pages/errorpage.jsx'
-
-// import Logs from './pages/admin/logs'
-// import { store } from './store.jsx'
-// import { Provider } from 'react-redux'
-// import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import Root from './pages/root.jsx'
 import ErrorPage from './pages/errorPage.jsx'
-import Courses from './pages/courses'
-import Course from './pages/courses/course.jsx'
-import Lecturers from './pages/lecturers'
+import Courses from './pages/speciality/index.jsx'
+import Course from './pages/speciality/speciality.jsx'
+import Users from './pages/users/index.jsx'
 import Cert from './pages/certificate'
 import Students from './pages/students'
 import Student from './pages/students/student.jsx'
@@ -41,16 +33,20 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "courses",
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "specialities",
         element: <Courses />,
       },
       {
-        path: "courses/:name",
-        element: <Course />,
+        path: "users/:name",
+        element: <Student />,
       },
       {
         path: "instructors",
-        element: <Lecturers />,
+        element: <Users />,
       },
       {
         path: "instructors/:name",

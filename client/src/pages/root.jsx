@@ -55,7 +55,7 @@ const Layout = (props) => {
 
                     {/* content */}
                     <div className="bg-gray-50">
-                        <div className={`flex w-full ${collapsed ? "h-[8%]" : "h-[10%]"} bg-[rgb(101,12,174)] shadow-2xl  px-2 items-center justify-end`}>
+                        <div className={`flex w-full ${collapsed ? "h-[8%]" : "h-[10%]"} bg-[#98daf8] shadow-2xl  px-2 items-center justify-end`}>
                             <span onClick={() => LogOutHandler()} className="bg-white cursor-pointer flex pointe items-center  gap-x-2 px-3 py-2 text-red-600 text-[14px] rounded-md shadow-2xl">
                                 <img src={Logout} alt="" className="w-5 h-5" />
                                 Logout</span>

@@ -1,5 +1,5 @@
 import expressAsyncHandler from "express-async-handler"
-import Course from '../models/courses.model.js'
+import Course from '../models/specialities.model.js'
 import { CustomError } from "../midddlewares/custom_error_middleware.js";
 import { validateCourseInput } from "../validators/course.validation.js";
 
@@ -15,7 +15,7 @@ const create_course = expressAsyncHandler(async (req, res) => {
     try {
         CustomError(validateCourseInput, req.body, res)
         const course = await Course.findOne({
-            course_name:req.body.course_name
+            course_name: req.body.course_name
         });
 
         if (course) {
@@ -34,7 +34,7 @@ const delete_course = expressAsyncHandler(async (req, res) => {
         return res.status(200).json({ message: ' deleted successfully ', deleted })
     } catch (error) {
         return res.status(404);
-       
+
     }
 })
 export const update_Course = expressAsyncHandler(async (req, res) => {

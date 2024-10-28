@@ -69,7 +69,7 @@ function Login() {
                     <Input type="password" disable={disable} label="password " name="password" value={item.password} onChange={handleChange} />
 
                     <div onClick={() => submit()} className="flex w-full items-center justify-center">
-                        <div className={`flex w-1/2 border-purple-800 items-center justify-center shadow-2xl text-white  ${!isFetching.isLoading && !disable ? "bg-purple-900" : "bg-gray-200 text-red-900"} rounded-md`}>{disable ? "UnAuthorized" : "Login"}</div>
+                        <div className={`flex w-1/2 border-blue-800 items-center justify-center shadow-2xl text-white  ${!isFetching.isLoading && !disable ? "bg-blue-900" : "bg-gray-200 text-red-900"} rounded-md`}>{disable ? "UnAuthorized" : "Login"}</div>
                     </div>
 
                 </div>
@@ -77,7 +77,7 @@ function Login() {
             <div className="absolute md:right-10 right:1 md:bottom-10 md:top-10 top-0 md:rounded-md md:h-[85%] h-full  md:w-1/3 w-full p-10 bg-white md:opacity-70 opacity-20  flex justify-center items-center z-20">
 
             </div>
-            <div className="absolute inset-0  rounded-[10px] bg-gradient-to-r from-indigo-500 via-[rgb(101,12,174)] to-pink-500 opacity-40 flex justify-center items-center z-10">
+            <div className="absolute inset-0  rounded-[10px] bg-gradient-to-r from-indigo-500 via-[#98daf8] to-pink-500 opacity-40 flex justify-center items-center z-10">
 
             </div>
         </div>

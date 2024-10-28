@@ -3,7 +3,7 @@ import Table from '../../components/table';
 import Create_Modal from '../../components/modals/create_modal';
 import Input from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
-import { useCreate_courseMutation, useDelete_courseMutation, useFetch_coursesQuery, useUpdate_courseMutation } from '../../features/slices/cousesSlice';
+import { useCreate_specialityMutation, useDelete_specialityMutation, useFetch_specialitysQuery, useUpdate_specialityMutation  } from '../../features/slices/specialitySlice';
 
 
 
@@ -12,22 +12,28 @@ function index() {
     const [show, setShow] = useState(false)
     const [err, setError] = useState(undefined)
     const initialState = {
-        course_name: "",
-        course_duration: ""
+        speciality_name: "",
+        consultation_fee: 0
     }
     const [item, setItem] = useState(initialState)
     const columns = [
-        { Header: 'Course', accessor: 'course_name' },
-        { Header: 'Duration(months)', accessor: 'course_duration' },
+        { Header: 'Speciality', accessor: 'speciality_name' },
+        { Header: 'consultation', accessor: 'consultation_fee' },
 
-        { Header: 'Price', accessor: 'course_price' },
     ];
-    const { data, isLoading, isSuccess, refetch } = useFetch_coursesQuery()
+    const [filter, setFilter] = useState({
+        page: 1, limit: 7,
+        activeTab: 1,
+        pageNumber: 0,
+      
+        word: "",
+    })
+    const { data, isLoading, isSuccess, refetch } = useFetch_specialitysQuery(filter)
 
-    const [PostCourse, isFetching, error] = useCreate_courseMutation()
-    const [UpdateCourse] = useUpdate_courseMutation()
+    const [Postspeciality, isFetching, error] = useCreate_specialityMutation()
+    const [Updatespeciality] = useUpdate_specialityMutation()
 
-    const [DeleteCourse] = useDelete_courseMutation()
+    const [Deletespeciality] = useDelete_specialityMutation()
 
     const handleChange = (e, name) => {
         setItem(((prev) => ({
@@ -41,9 +47,9 @@ function index() {
         try {
             if (item._id) {
                 
-                await UpdateCourse(item).unwrap()
+                await Updatespeciality(item).unwrap()
             } else {
-                await PostCourse(item).unwrap()
+                await Postspeciality(item).unwrap()
             }
 
             await refetch()
@@ -57,7 +63,7 @@ function index() {
     }
     const submitDelete = async () => {
         try {
-            await DeleteCourse(item._id).unwrap()
+            await Deletespeciality(item._id).unwrap()
             await refetch()
             setItem(initialState)
             setShow(false)
@@ -76,24 +82,26 @@ function index() {
     return (
         <>
 
-            <Table isLoading={isLoading} key_column="course_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Courses Offered" data={isSuccess && data !== undefined ? data : []} />
-
+            <Table isLoading={isLoading} key_column="speciality_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="specialities Offered" data={isSuccess && data !== undefined ? data.results.results
+                : []}
+                paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
+            />
             {popUp && <Create_Modal
                 submit={submit}
                 cancel={cancel}
                 item={item}
                 error={isFetching?.error?.data?.message}
                 body={<div className='gap-y-2 flex flex-col'>
-                    <Input label="Course" name="course_name" value={item.course_name} onChange={handleChange} />
-                    <Input label="Duration" name="course_duration" value={item.course_duration} type="number" onChange={handleChange} />
-                    <Input label="Price" name="course_price" value={item.course_price} type="number" onChange={handleChange} />
+                    <Input label="speciality" name="speciality_name" value={item.speciality_name} onChange={handleChange} />
+                    <Input label="Fee" name="consultation_fee" value={item.speciality_duration} type="number" onChange={handleChange} />
+                   
                 </div>}
-                name="Course" setPopUp={setPopUp} />}
+                name="speciality" setPopUp={setPopUp} />}
             {show && <Delete_Modal
                 item={item}
                 submit={submitDelete}
                 cancel={cancel}
-                name="Course" setPopUp={setShow} />}
+                name="speciality" setPopUp={setShow} />}
         </>
 
     )

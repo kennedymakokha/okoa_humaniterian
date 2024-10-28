@@ -73,7 +73,7 @@ const App = () => {
       }} className="flex h-full   text-white  justify-center items-center">
         <div
           className={`flex px-2 py-1 capitalize ${
-            active ? "bg-purple-400 text-black" : " text-white bg-purple-700"
+            active ? "bg-blue-400 text-black" : " text-white bg-blue-700"
           } shadow-2xl  rounded-md justify-center items-center`}
         >
           {title}
@@ -85,7 +85,7 @@ const App = () => {
   return (
     <div className="w-full  relative z-0">
       <div className="w-full h-full flex items-center flex-col gap-y-20 justify-center">
-        <h2 className="text-[rgb(101,12,174)] text-40 font-bold underline uppercase">
+        <h2 className="text-[#98daf8] text-40 font-bold underline uppercase">
           {details.course_name}
         </h2>
         <div className="flex w-full border flex-col bg-slate-50 p-2">
@@ -187,13 +187,13 @@ export default App;
 
 //     return (
 //         <div className='w-full h-full flex items-center flex-col gap-y-20 justify-center'>
-//             <h2 className="text-[rgb(101,12,174)] text-40 font-bold underline uppercase">{details.course_name}</h2>
+//             <h2 className="text-[#98daf8] text-40 font-bold underline uppercase">{details.course_name}</h2>
 //
 //             <div id="certificate" className=''>
 //                 {/* <Certificate data={user} /> */}
 //                 <Certificate user={{name:"kenn",date:"james",course:"law"}} />
 //             </div>
-//             <div className="flex flex-col w-40 h-40 bg-[rgb(101,12,174)] font-bold text-white text-5xl rounded-full items-center justify-center">
+//             <div className="flex flex-col w-40 h-40 bg-[#98daf8] font-bold text-white text-5xl rounded-full items-center justify-center">
 //                 {
 //                     details.duration
 //                 }

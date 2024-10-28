@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 
 
 const Schema = mongoose.Schema;
-const UserSchema = new Schema({
+const patientSchema = new Schema({
     name: {
         type: String,
     },
@@ -14,9 +14,9 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "user_tb",
     },
-    specialization: {
+    guardian: {
         type: Schema.Types.ObjectId,
-        ref: "speciality_tb",
+        ref: "guardian_tb",
     },
     email: {
         type: String
@@ -29,15 +29,7 @@ const UserSchema = new Schema({
     paid: {
         type: Boolean,
         default: false
-    },
-
-
-    role: {
-        type: String,
-        enum: ["nurses", "doctors", "admin", "receptionists", "pharmacists"],
-        default: "patient"
-    },
-
+    }, 
     dob: {
         type: String,
     },
@@ -47,11 +39,6 @@ const UserSchema = new Schema({
     ID_no: {
         type: String,
     },
-
-    hashPassword: {
-        type: String,
-        required: true
-    },
     deletedAt: {
         type: String,
         default: null,
@@ -59,9 +46,6 @@ const UserSchema = new Schema({
 
 }, { timestamps: true });
 
-UserSchema.methods.comparePassword = (password, hashPassword) => {
-    return bcrypt.compareSync(password, hashPassword);
-};
 
-const Model = mongoose.model('user_tb', UserSchema);
+const Model = mongoose.model('user_tb', patientSchema);
 export default Model

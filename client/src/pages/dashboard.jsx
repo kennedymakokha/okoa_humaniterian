@@ -9,7 +9,7 @@ const CardOne = ({ from, to, color, count, title, icon, url, grad }) => {
         <div className={` shrink-0 w-[25%] h-24 px-1 `}>
             <div className={` shrink-0 w-full h-24 rounded-md shadow-2xl items-center justify-center flex flex-col ${to} ${from} bg-gradient-to-${grad}   `}>
 
-                <Link to={url} className={`flex cursor-pointer font-bold items-center justify-center bg-purple-200 text-[20px] size-10 rounded-tl-md rounded-br-md shadow-3xl`}>
+                <Link to={url} className={`flex cursor-pointer font-bold items-center justify-center bg-blue-200 text-[20px] size-10 rounded-tl-md rounded-br-md shadow-3xl`}>
                     {count}
                 </Link>
                 <h2 className="text-white font-bold capitalize">
@@ -62,8 +62,8 @@ function Dashboard() {
                 </div>
                 <div className="flex w-1/4 border flex-col rounded-t-md  h-full">
                     <div className="flex w-full h-[45%]  bg-red-100 flex-col items-center justify-center">
-                        <img src="" alt="" className=" h-20 w-20 border-2 border-[rgb(101,12,174)] rounded-full" />
-                        <h3 className=" text-[rgb(101,12,174)] font-bold "> Student of the week </h3>
+                        <img src="" alt="" className=" h-20 w-20 border-2 border-[#98daf8] rounded-full" />
+                        <h3 className=" text-[#98daf8] font-bold "> Student of the week </h3>
                     </div>
                     <div className="flex flex-col p-3">
                         <DetailItem title="Enrollment No" value="202402009" />
@@ -72,7 +72,7 @@ function Dashboard() {
                         <DetailItem title="Semister" value="2" />
                     </div>
                     <div className="flex items-center justify-center w-full">
-                        <div className="flex w-3/4 px-2 items-center justify-center text-white text-sm rounded-md bg-[rgb(101,12,174)] shadow-2xl">View Prodile </div>
+                        <div className="flex w-3/4 px-2 items-center justify-center text-white text-sm rounded-md bg-[#98daf8] shadow-2xl">View Prodile </div>
                     </div>
                 </div>
             </div>

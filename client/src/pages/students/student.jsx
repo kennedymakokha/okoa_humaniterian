@@ -75,7 +75,7 @@ function Student() {
                 <div className="flex h-full w-3/4  flex-col  p-2">
                     <div className="flex h-full w-full flex-col items-start   shadow-3xl">
                         <h2 className='font-bold uppercase'>{details.name} </h2>
-                        <span className=" text-sm text-[rgb(101,12,174)] font-semibold capitalize">{details?.role}</span>
+                        <span className=" text-sm text-[#98daf8] font-semibold capitalize">{details?.role}</span>
                         <Ratings small row width={5} count={Math.random() * (5 - 0) + 0} />
                         <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-0">
                             {arr.map((menu, i) => (

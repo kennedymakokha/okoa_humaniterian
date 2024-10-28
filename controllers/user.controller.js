@@ -1,7 +1,7 @@
 import expressAsyncHandler from "express-async-handler"
 import User from '../models/auth.model.js'
 import Guardian from '../models/guardian.model.js'
-import Course from '../models/courses.model.js'
+import Course from '../models/specialities.model.js'
 import Fee from '../models/fee.model.js'
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -22,26 +22,26 @@ export const get_users = expressAsyncHandler(async (req, res) => {
 
 export const create_user = expressAsyncHandler(async (req, res) => {
     try {
-        const latestRecord = await User.find({ role: "student" }).sort({ createdAt: -1 }).limit(1);
+        const latestRecord = await User.find().sort({ createdAt: -1 }).limit(1);
         let newNumber
         if (latestRecord[0]?.adm_no === undefined) {
             newNumber = 1
         } else {
-           let str = latestRecord[0].adm_no.split("/");
+            let str = latestRecord[0].adm_no.split("/");
             newNumber = parseInt(str[2]) + 1
         }
         const admi_no = newNumber.toString().padStart(4, '0');
-     
+
         if (!req.body.password) {
             req.body.password = `Af${req.body.phone_number}!`
             req.body.confirm_password = `Af${req.body.phone_number}!`
         }
-        const course = await Course.findById(req.body.course)
+
         CustomError(validateUserInput, req.body, res)
         req.body.phone_number = await Format_phone_number(req.body.phone_number); //format the phone number
         const phone = await User.findOne({
             $or: [
-                // { ID_no: req.body.ID_no },
+                { ID_no: req.body.ID_no },
                 { phone_number: req.body.phone_number, }
             ]
         });
@@ -49,24 +49,16 @@ export const create_user = expressAsyncHandler(async (req, res) => {
         if (phone) {
             return res.status(400).json({ message: 'User Exists !! ' })
         }
-        if (req.body.role === "student") {
-            req.body.validity = ValidityFunc(Date(), course.course_duration)
+        if (req.body.role === "doctors") {
+            req.body.specialization = req.body.speciality
         }
 
         req.body.createdBy = req.user._id
         req.body.verification_code = MakeActivationCode(5);
-        req.body.adm_no = `OHO/2024/${admi_no}`
+        req.body.adm_no = `HMS/2024/${req.body.role === "doctors" ? "DOC" : req.body.role === "nurses" ? "NUR" : req.body.role === "receptionists" ? "REC" : req.body.role === "pharmacists" ? "PHR" : "GNR"}-${admi_no}`
         req.body.hashPassword = bcrypt.hashSync(req.body.password, 10);
         let data = await User.create(req.body)
-        if (req.body.role === "student") {
-            req.body.validity = ValidityFunc(Date(), course.course_duration)
-            await Fee.create({
-                student: data._id,
-                student_name: data.name,
-                arrears: course.course_price,
-                createdBy: req.user._id
-            })
-        }
+      
         return res.status(200).json(data._id)
     } catch (error) {
         console.log(error)

@@ -28,7 +28,7 @@ const TimeTable = () => {
             <div className="grid grid-cols-9 gap-1">
                 {board.map((row, rowIndex) => (
                     row.map((cell, colIndex) => (
-                        <div className={`md:w-10 w-8 md:h-10 h-8 text-center border ${cell !== "" ? "bg-purple-300":"bg-slate-50"} flex items-center justify-center text-sm border-purple-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500`} key={`${rowIndex}-${colIndex}`}>{cell}</div>
+                        <div className={`md:w-10 w-8 md:h-10 h-8 text-center border ${cell !== "" ? "bg-blue-300":"bg-slate-50"} flex items-center justify-center text-sm border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500`} key={`${rowIndex}-${colIndex}`}>{cell}</div>
                      
                     ))
                 ))}

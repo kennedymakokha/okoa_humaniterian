@@ -12,6 +12,7 @@ import HTTP from 'http'
 
 // routes
 import course_routes from './routes/courses.route.js'
+import speciality_routes from './routes/speciality.route.js'
 import user_routes from './routes/users.route.js'
 import dataEntry_routes from './routes/dataenty.route.js'
 import practical_routes from './routes/practicals.route.js'
@@ -33,10 +34,10 @@ connectDb()
 const app = express()
 app.use(cors("*"))
 app.use((req, res, next) => {
-    // Set the Referrer-Policy header
-    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    next();
-  });
+  // Set the Referrer-Policy header
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
 var http = HTTP.createServer(app);
 app.use(express.json())
 
@@ -46,7 +47,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser())
 
-app.use('/api/courses', course_routes)
+// app.use('/api/courses', course_routes)
+app.use('/api/speciality', speciality_routes)
 app.use('/api/users', user_routes)
 app.use('/api/data-entry', dataEntry_routes)
 app.use('/api/practicals', practical_routes)
@@ -61,7 +63,7 @@ app.get('/', (req, res) => res.send("Server started"))
 
 // app.listen(port, () => console.log(`Server started on port ${port}`))
 const port =
-    process.env.NODE_ENV === "production" ? process.env.PORT || 5000 : 5000;
+  process.env.NODE_ENV === "production" ? process.env.PORT || 5000 : 5000;
 http.listen(port, () => console.log("Server listening on port " + port));
 
 let io = Lab(http);

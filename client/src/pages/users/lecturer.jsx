@@ -7,7 +7,7 @@ import Bio from './bio'
 
 const Button = ({ title, state, toggleState }) => {
     return (
-        <div onClick={toggleState} className={`flex capitalize rounded-md h-full ${state ? "border-b-[4px] bg-purple-100" : ""} shadow-2xl border-[rgb(101,12,174)] items-center  px-2 justify-center   gap-x-20`}>
+        <div onClick={toggleState} className={`flex capitalize rounded-md h-full ${state ? "border-b-[4px] bg-blue-100" : ""} shadow-2xl border-[#98daf8] items-center  px-2 justify-center   gap-x-20`}>
             {title}
         </div>
     )
@@ -64,7 +64,7 @@ function Course() {
                 <div className="flex h-full w-3/4  flex-col  p-2">
                     <div className="flex h-full w-full flex-col items-start   shadow-3xl">
                         <h2 className='font-bold'>{details.name} {details.last_name}</h2>
-                        <span className=" text-sm text-[rgb(101,12,174)] font-semibold">Lecturer</span>
+                        <span className=" text-sm text-[#98daf8] font-semibold">Lecturer</span>
                         <Ratings small row width={5} count={Math.random() * (5 - 0) + 0} />
                         <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-4">
                             {menus.map((menu, i) => (

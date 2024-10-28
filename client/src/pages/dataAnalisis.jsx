@@ -43,9 +43,9 @@ const DataAnalisis = () => {
     // eslint-disable-next-line react/prop-types
     const DataItem = ({ value, title, value1 }) => {
         return (
-            <div className="flex w-full border-b border-purple-200  ">
-                <div className="flex w-1/4 font-bold border-r border-purple-200px-2 ">{title}</div>
-                <div onClick={()=>title==="Errors"&& setShow(prev=>(!prev)) }className="flex border-r border-purple-200 w-[300px] px-2">{value}</div>
+            <div className="flex w-full border-b border-blue-200  ">
+                <div className="flex w-1/4 font-bold border-r border-blue-200px-2 ">{title}</div>
+                <div onClick={()=>title==="Errors"&& setShow(prev=>(!prev)) }className="flex border-r border-blue-200 w-[300px] px-2">{value}</div>
                 <div className="flex px-2 text-red-400 ">{value1}</div>
             </div>
         )
@@ -79,7 +79,7 @@ console.log(data)
                         onChange={(e) => handleFileChange(e)}
                         type="file"
                         name="file"
-                        className={`block w-full text-sm ${data.isError ? "text-red-400" : "text-slate-500"} file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100`}
+                        className={`block w-full text-sm ${data.isError ? "text-red-400" : "text-slate-500"} file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100`}
                     />
                 </div>}
                 {data?.data && <div className={`flex w-full mb-10 flex-center justify-center ${data?.data?.acuracy < 0 && " bg-red-200 animate-pulse"} ${data?.data?.acuracy > 60 && " bg-green-100 animate-pulse"}`}>
@@ -98,7 +98,7 @@ console.log(data)
                     </div>
                 </div>}
                {item.student!=="" && item.test!==""&& <div className="flex w-full items-center justify-end">
-                    {data.isSuccess && data?.data?.errors ? <button onClick={()=>downloadCSV(data?.data?.errors, `${data?.data?.name} ${item.test} error report `)}>Download CSV</button>:<div className="flex font-bold pointer-cursor text-white rounded-md px-2 py-1 bg-purple-700 " onClick={async()=>await handleSubmit()}>Submit</div>}
+                    {data.isSuccess && data?.data?.errors ? <button onClick={()=>downloadCSV(data?.data?.errors, `${data?.data?.name} ${item.test} error report `)}>Download CSV</button>:<div className="flex font-bold pointer-cursor text-white rounded-md px-2 py-1 bg-blue-700 " onClick={async()=>await handleSubmit()}>Submit</div>}
                 </div>}
                 
             </div>

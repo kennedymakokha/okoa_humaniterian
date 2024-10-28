@@ -5,7 +5,7 @@ import React, { useState } from "react";
 function Input({ label, min, required, value, disable, name, type, onChange }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="flex w-full px-2 items-center gap-x-2 rounded-md border md:border-slate-200 border-purple-800">
+    <div className="flex w-full px-2 items-center gap-x-2 rounded-md border md:border-slate-200 border-blue-800">
       <div className="flex capitalize md:text-slate-500 text-slate-50  font-bold ">
         {label}{" "}
         {required === true && (
@@ -33,7 +33,7 @@ function Input({ label, min, required, value, disable, name, type, onChange }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-purple-600"
+              className="size-6 text-blue-600"
             >
               <path
                 strokeLinecap="round"
@@ -53,7 +53,7 @@ function Input({ label, min, required, value, disable, name, type, onChange }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-purple-600"
+              className="size-6 text-blue-600"
             >
               <path
                 strokeLinecap="round"

@@ -25,7 +25,7 @@ const SearchableSelect = ({ searches, label, required, handleChange, options, la
 
     return (
         <div className='flex flex-col w-full'>
-            <div className="flex w-full relative flex-col  rounded-md border md:border-slate-200 border-purple-800">
+            <div className="flex w-full relative flex-col  rounded-md border md:border-slate-200 border-blue-800">
                 <div className="flex w-full items-center px-2 justify-between">
                     <div className="flex capitalize md:text-slate-500 text-slate-50  font-bold ">
                         {label}{" "}

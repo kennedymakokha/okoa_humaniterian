@@ -34,7 +34,7 @@ const paginated = (model) => {
 
         try {
 
-            var { word, role,course } = req.query
+            var { word, role } = req.query
             var searchKey = new RegExp(`${word}`, 'i')
             if (word) {
                 results.results = await model.find({ deletedAt: null, $or: [{ name: searchKey }, { phone_number: searchKey },{ adm_no: searchKey },{ ID_no: searchKey }] }).limit(limit).skip(startIndex).populate('createdBy', 'name').sort({'createdAt' : -1}).select("-verification_code -deletedAt -activated -createdBy").populate("course", "course_name course_duration").populate('guardian')
@@ -51,14 +51,7 @@ const paginated = (model) => {
 
             }
 
-            if (course) {
-                results.results = await model.find({ course:course, deletedAt: null }).limit(limit).skip(startIndex).populate('createdBy', 'name').sort({'createdAt' : -1}).select("-verification_code -deletedAt -activated -createdBy").populate("course", "course_name course_duration").populate('guardian')
-                    .exec()
-                res.paginate = { results }
-                next()
-
-            }
-
+           
             else {
                 results.results = await model.find({ deletedAt: null }).limit(limit).skip(startIndex).populate('createdBy', 'name').sort({'createdAt' : -1}).select("-verification_code -deletedAt -activated -createdBy").populate("course", "course_name course_duration").populate('guardian')
                     .exec()

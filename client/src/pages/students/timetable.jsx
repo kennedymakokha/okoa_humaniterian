@@ -23,7 +23,7 @@ const TimeTable = () => {
                 {board.map((row, rowIndex) => (<>
                     {
                         row.map((cell, colIndex) => (
-                            <div className={`md:w-32 w-8 md:h-14  flex-col h-8 text-center border ${cell.time !== "" ? "bg-purple-300" : "bg-slate-50"} flex items-center justify-center text-sm border-purple-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500`} key={`${rowIndex}-${colIndex}`}>
+                            <div className={`md:w-32 w-8 md:h-14  flex-col h-8 text-center border ${cell.time !== "" ? "bg-blue-300" : "bg-slate-50"} flex items-center justify-center text-sm border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500`} key={`${rowIndex}-${colIndex}`}>
                                 <span>{cell.day}</span>
                                 {/* <span>{cell.time}</span> */}
                             </div>

@@ -97,7 +97,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             }
         }),
         get_users: builder.query({
-            query: (data) => `${USER_URL}?role=${data.role}&page=${data.page}&limit=${data.limit}&word=${data.word}&course=${data.course}`
+            query: (data) => `${USER_URL}?role=${data.role}&page=${data.page}&limit=${data.limit}&word=${data.word}}`
         }),
         delete_user: builder.mutation({
             query: (id) => ({

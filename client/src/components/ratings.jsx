@@ -31,7 +31,7 @@ export const Ratings = (props) => {
                 <span className="text-sm justify-left flex  ">Rankings</span>
                 
                 <div className="flex items-center">
-                <span className="text-sm font-bold text-[rgb(101,12,174)]">{parseInt(props.count)+1}/5</span>
+                <span className="text-sm font-bold text-[#98daf8]">{parseInt(props.count)+1}/5</span>
                     {count.map((user, i) => (
                         <div i={i} key={i}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${props.small ? "sm:w-5 sm:h-5" : "sm:w-6 sm:h-6"} text-yellow-600 w-4 h-4`}>
