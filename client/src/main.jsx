@@ -5,12 +5,14 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Root from './pages/root.jsx'
 import ErrorPage from './pages/errorPage.jsx'
-import Courses from './pages/speciality/index.jsx'
-import Course from './pages/speciality/speciality.jsx'
+import Specializations from './pages/speciality/index.jsx'
+
 import Users from './pages/users/index.jsx'
 import Cert from './pages/certificate'
-import Students from './pages/students'
-import Student from './pages/students/student.jsx'
+import Patients from './pages/patients'
+import Triage from './pages/triage'
+import PatientTriage from './pages/triage/triage.jsx'
+import Patient from './pages/patients/patient.jsx'
 import Finance from './pages/finance'
 import { Provider } from 'react-redux'
 import { store } from './store.js'
@@ -38,11 +40,11 @@ const router = createBrowserRouter([
       },
       {
         path: "specialities",
-        element: <Courses />,
+        element: <Specializations />,
       },
       {
         path: "users/:name",
-        element: <Student />,
+        element: <Patient />,
       },
       {
         path: "instructors",
@@ -50,15 +52,23 @@ const router = createBrowserRouter([
       },
       {
         path: "instructors/:name",
-        element: <Student />,
+        element: <Patient />,
       },
       {
-        path: "students",
-        element: <Students />,
+        path: "patients",
+        element: <Patients />,
       },
       {
-        path: "students/:name",
-        element: <Student />,
+        path: "triage",
+        element: <Triage />,
+      },
+      {
+        path: "triage/:name",
+        element: <PatientTriage />,
+      },
+      {
+        path: "patients/:name",
+        element: <Patient />,
       },
       {
         path: "login",

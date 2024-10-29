@@ -9,7 +9,7 @@ import TabBatton from '../../components/tabBatton'
 
 
 
-function Student() {
+function Patient() {
     const location = useLocation()
     const { details } = location.state
 
@@ -116,4 +116,4 @@ function Student() {
     )
 }
 
-export default Student
+export default Patient

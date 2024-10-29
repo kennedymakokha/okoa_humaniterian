@@ -4,7 +4,7 @@ import Modal from '../../components/modals/delete_modal';
 import Create_Modal from '../../components/modals/create_modal';
 import Input, { SelectContainer } from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
-import { useFetch_coursesQuery } from '../../features/slices/cousesSlice';
+
 import { useDelete_userMutation, useGet_usersQuery, usePost_userMutation, useUpdate_userMutation } from '../../features/slices/usersApiSlice';
 import { useLocation } from 'react-router-dom';
 import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
@@ -31,6 +31,8 @@ function index() {
         { title: "receptionists", active: false },
         { title: "pharmacists", active: false },
         { title: "nurses", active: false },
+        { title: "lab tech", active: false },
+        { title: "accountants", active: false },
     ]);
 
     const [Post_user] = usePost_userMutation()
@@ -43,7 +45,6 @@ function index() {
         activeTab: 1,
         pageNumber: 0,
         role: TabItem,
-        course: "",
         word: "",
 
     })
@@ -104,12 +105,17 @@ function index() {
                         active: tab.title === title,
                     }))
                 );
-
-
+                setItem(prev => ({
+                    ...prev, role: title
+                }))
+                setFilter(prev => ({
+                    ...prev, role: title
+                }))
+                refetch()
 
             }} className="flex h-full   text-white  justify-center items-center">
                 <div
-                    className={`flex px-2 py-1 capitalize ${active ? "bg-blue-400 text-black" : " text-white bg-blue-700"
+                    className={`flex px-2 font-bold py-1 capitalize ${active ? "bg-blue-400 text-black" : " text-white bg-blue-700"
                         } shadow-2xl  rounded-md justify-center items-center`}
                 >
                     {title}
@@ -118,12 +124,12 @@ function index() {
         );
     };
     const { data: specialities, isSuccess: studentsSuccess } = useFetch_specialitysQuery({
-        page: 1, limit: 7,
+        page: 1, limit: 200,
         activeTab: 1,
         pageNumber: 0,
         word: "",
     })
-    console.log(specialities)
+
     const deleteUser = async () => {
         try {
             await delete_user(item._id).unwrap()
@@ -137,12 +143,12 @@ function index() {
 
     return (
         <>
-            <div className="flex w-full  my-2   gap-x-1 rounded-md justify-center items-center">
+            <div className="flex w-full  mt-6   gap-x-1 rounded-md justify-center items-center">
                 {tabs.map((tab, i) => (
                     <Tab key={i} title={tab.title} active={tab.active} />
                 ))}
             </div>
-            <Table isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title={TabItem} data={isSuccess && data !== undefined ? data.results.results
+            <Table isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title={TabItem} data={isSuccess && data !== undefined ? data?.results?.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
@@ -167,24 +173,16 @@ function index() {
                             name: "Female", _id: "female"
                         }, {
                             name: "Not willing to specify", _id: "Not willing to specify"
-                        }]} required value={item.course} handleChange={(e) => setItem(((prev) => ({
+                        }]} required value={item.gender} handleChange={(e) => setItem(((prev) => ({
                             ...prev, gender: e.target.value
                         })))} />
-                        <SelectInput label="Student" searches="specifications" required value_holder="_id" handleChange={(e) => {
+                        {TabItem === "doctors" && <SelectInput label="Specialization" searches="specifications" required value_holder="_id" handleChange={(e) => {
                             setItem(((prev) => ({
                                 ...prev, speciality: e,
                             })))
                         }}
                             lable_holder="speciality_name" options={studentsSuccess && specialities !== undefined ? specialities.results.results : []} />
-                        {/* <SelectContainer key_name="name" label="Gender" array={[{
-                            name: "general", _id: "general"
-                        }, {
-                            name: "gynaecologist ", _id: "gynaecologist "
-                        }, {
-                            name: "Not willing to specify", _id: "Not willing to specify"
-                        }]} required value={item.course} handleChange={(e) => setItem(((prev) => ({
-                            ...prev, gender: e.target.value
-                        })))} /> */}
+                        }
                     </div>
 
                 </div>}
@@ -194,7 +192,7 @@ function index() {
                 item={item}
                 submit={deleteUser}
                 cancel={() => setItem(initialState)}
-                name="Course" setPopUp={setShow} />}
+                name="User" setPopUp={setShow} />}
         </>
 
     )

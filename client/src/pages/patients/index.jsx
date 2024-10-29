@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import Table from '../../components/table';
-import Modal from '../../components/modals/delete_modal';
 import Create_Modal from '../../components/modals/create_modal';
 import Input, { SelectContainer } from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
 import { useFetch_coursesQuery } from '../../features/slices/cousesSlice';
-import { useDelete_userMutation, useEnrollUserMutation, useGet_usersQuery, usePost_guardianMutation, usePost_userMutation, useUpdate_userMutation } from '../../features/slices/usersApiSlice';
+import { usePost_guardianMutation, usePost_patientsMutation, useAdmit_patientMutation, useDelete_patientMutation, useEdit_patientMutation, useFetch_patientQuery, useGet_patientsQuery, useValidate_input_patientsMutation, } from '../../features/slices/patientsSlice';
 import { useLocation } from 'react-router-dom';
-
+import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
+import SelectInput from '../../components/SelectInput';
+import Payment_Modal from '../../components/modals/payment_modal';
 function index() {
     const [popUp, setPopUp] = useState(false)
     const [show, setShow] = useState(false)
+    const [pay, setPay] = useState(false)
+    const [paying, setPaying] = useState(true)
     const [next, setNext] = useState(false)
     const [error, setError] = useState(undefined)
     const location = useLocation()
-    let role = location.pathname.replace(/\//g, "").slice(0, -1)
+
 
     const initialState = {
         name: "",
-        email: "",
         phone_number: "",
+        pay_number: "",
         ID_no: "",
-        role: role,
-        dob: "",
+        age: "",
         gender: "",
-        course: "",
-        course_name: "",
-        state: ""
+        dept: "",
+        role: "patient",
+        password: "Makokha12!"
+        // state: ""
     }
     const newguardian = {
         name: "",
@@ -39,32 +42,33 @@ function index() {
     const [item, setItem] = useState(initialState)
     const [nextOfKin, setNextOfKin] = useState(newguardian)
     const columns = [
-        { Header: 'Adm', accessor: 'adm_no' },
+        { Header: 'Reg No', accessor: 'reg_no' },
         { Header: 'name', accessor: 'name' },
         { Header: 'Phone Number', accessor: 'phone_number' },
 
         { Header: 'Identificaton', accessor: 'ID_no' },
         { Header: 'gender', accessor: 'gender' },
-        { Header: 'Date of Birth', accessor: 'dob' },
+        { Header: 'age', accessor: 'age' },
 
     ];
-    const { data: courses, isLoading, isSuccess: cousrsesSuccess } = useFetch_coursesQuery()
-    const [Post_user] = usePost_userMutation()
+
+    const [Post_user] = usePost_patientsMutation()
+    const [validate_user] = useValidate_input_patientsMutation()
     const [Post_Guardian] = usePost_guardianMutation()
-    const [delete_user,] = useDelete_userMutation()
-    const [UpdateUser] = useUpdate_userMutation()
-    const [EnrolUser] = useEnrollUserMutation()
+    const [delete_user,] = useDelete_patientMutation()
+    const [UpdateUser] = useEdit_patientMutation()
+    const [EnrolUser] = useAdmit_patientMutation()
 
     const [filter, setFilter] = useState({
         page: 1, limit: 7,
         activeTab: 1,
         pageNumber: 0,
-        role: role,
         word: "",
-        course: ""
+        course: "",
+        state: "all"
 
     })
-    const { data, refetch, isSuccess, } = useGet_usersQuery(filter)
+    const { data, refetch, isSuccess, isLoading, } = useGet_patientsQuery(filter)
 
     const handleChange = (e, name) => {
         setError("")
@@ -79,6 +83,22 @@ function index() {
         })))
 
     }
+    const closePay = async () => {
+        setPay(false)
+        await refetch()
+        setPaying(!paying)
+        setItem(initialState)
+    }
+    const Pay = async () => {
+        try {
+            setPaying(!paying)
+            await Post_user(item).unwrap()
+            setTimeout(() => closePay(), 6000);
+
+        } catch (error) {
+
+        }
+    }
     const submit = async () => {
         try {
             let response
@@ -86,11 +106,14 @@ function index() {
                 await UpdateUser(item).unwrap()
             }
             else {
-                response = await Post_user(item).unwrap()
+                await validate_user(item).unwrap()
+                setPay(true)
+                setItem(prev => ({ ...prev, pay_number: item.phone_number }))
+               
             }
             await refetch()
             setPopUp(false)
-            setItem(initialState)
+            // setItem(initialState)
         } catch (error) {
             setError(error?.data?.message)
         }
@@ -128,17 +151,27 @@ function index() {
 
         }
     }
+    const { data: specialities, isSuccess: studentsSuccess } = useFetch_specialitysQuery({
+        page: 1, limit: 200,
+        activeTab: 1,
+        pageNumber: 0,
+        word: "",
+
+    })
+
 
     return (
         <>
-            <Table enrolUser={enrolUser} isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="students" data={isSuccess && data !== undefined ? data.results.results
+            <Table enrolUser={enrolUser} isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Patients" data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
             {popUp && <Create_Modal
                 error={error}
                 submit={submit}
-                cancel={() => setItem(initialState)}
+                cancel={() => console.log(item)}
+                submitName="Continue"
+                // cancel={() => setItem(initialState)}
                 item={item}
                 body={<div className='gap-y-2 flex w-full flex-col'>
                     <div className="flex gap-2">
@@ -146,10 +179,8 @@ function index() {
                         <Input label="phone" required name="phone_number" value={item.phone_number} onChange={handleChange} />
                     </div>
                     <div className="flex gap-x-2">
-                        <Input label="Email" name="email" value={item.email} onChange={handleChange} />
+
                         <Input label="ID" name="ID_no" value={item.ID_no} type="number" onChange={handleChange} />
-                    </div>
-                    <div className="flex gap-x-2">
                         <SelectContainer key_name="name" label="Gender" name="Gender" array={[{
                             name: "Male", _id: "male"
                         }, {
@@ -159,29 +190,19 @@ function index() {
                         }]} required value={item.course} handleChange={(e) => setItem(((prev) => ({
                             ...prev, gender: e.target.value
                         })))} />
-                        <SelectContainer key_name="course_name" label="Course" array={cousrsesSuccess && courses !== undefined ? courses : []} required name="Course" value={item.course} handleChange={(e) => {
-                            setItem(((prev) => ({
-                                ...prev, course: e.target.value, course_name: courses.find(item => item._id === e.target.value)["course_name"]
-                            })))
-                        }} />
                     </div>
                     <div className="flex gap-x-2">
-                        <SelectContainer key_name="name" label="" array={[
-                            {
-                                name: "Both Parents Alive", _id: "parented"
-                            }, {
-                                name: "Half orphan", _id: "half-orphan"
-                            }, {
-                                name: "Total Orphan", _id: "total-orphan"
-                            }, {
-                                name: "Abandoned", _id: "abandoned"
-                            }]} required name="State" value={item.course} handleChange={(e) => setItem(((prev) => ({
-                                ...prev, state: e.target.value
-                            })))} />
-                        <Input label="DOB" required name="dob" type="date" min="2008-01-01" value={item.dob} onChange={handleChange} />
+                        <Input label="Age" required name="age" value={item.age} onChange={handleChange} />
+                        <SelectInput label="Speciality" searches="specifications" value_holder="_id" handleChange={(e) => {
+                            setItem(((prev) => ({
+                                ...prev, speciality: e,
+                            })))
+                        }}
+                            lable_holder="speciality_name" options={studentsSuccess && specialities !== undefined ? specialities.results.results : []} />
                     </div>
+
                 </div>}
-                name="Student" setPopUp={setPopUp} />}
+                name="Patient" setPopUp={setPopUp} />}
             {next && <Create_Modal
                 submit={submitGuardian}
                 error={error}
@@ -216,6 +237,14 @@ function index() {
                 submit={deleteUser}
                 cancel={() => setItem(initialState)}
                 name="Course" setPopUp={setShow} />}
+            {pay && <Payment_Modal
+                item={item}
+                paying={paying}
+                handleChange={handleChange}
+                submit={Pay}
+                setItem={setItem}
+                cancel={() => setItem(prev => ({ ...prev, pay_number: item.phone_number }))}
+                name="Consultation" phone={item.pay_number} setPopUp={setPay} />}
         </>
 
     )

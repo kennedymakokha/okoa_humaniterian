@@ -34,7 +34,7 @@ const UserSchema = new Schema({
 
     role: {
         type: String,
-        enum: ["nurses", "doctors", "admin", "receptionists", "pharmacists"],
+        enum: ["nurses", "doctors", "admin", "receptionists", "pharmacists","lab tech","accountants"],
         default: "patient"
     },
 
@@ -42,6 +42,9 @@ const UserSchema = new Schema({
         type: String,
     },
     gender: {
+        type: String,
+    },
+    reg_no: {
         type: String,
     },
     ID_no: {

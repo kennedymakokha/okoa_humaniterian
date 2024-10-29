@@ -9,7 +9,7 @@ const paginated = (model) => {
         const endIndex = page * limit
         const pager = Math.trunc(count / limit)
         const results = {}
-        const admin = {}
+
 
         if (pager > 1) {
             results.pager = pager
@@ -34,32 +34,42 @@ const paginated = (model) => {
 
         try {
 
-            var { word, role } = req.query
+            var { word, patient } = req.query
             var searchKey = new RegExp(`${word}`, 'i')
+
             if (word) {
-                results.results = await model.find({ deletedAt: null, $or: [{ name: searchKey }, { phone_number: searchKey },{ adm_no: searchKey },{ ID_no: searchKey }] }).limit(limit).skip(startIndex).populate('createdBy', 'name').sort({'createdAt' : -1}).select("-verification_code -deletedAt -activated -createdBy").populate('specialization')
+                results.results = await model.find({ deletedAt: null, $or: [{ speciality_name: searchKey }] }).limit(limit).skip(startIndex)
+                    .populate('createdBy', 'name')
+                    .sort({ 'createdAt': -1 })
+                    .select(" -deletedAt ")
                     .exec()
                 res.paginate = { results }
                 next()
 
             }
-            if (role) {
-                results.results = await model.find({ role, deletedAt: null }).limit(limit).skip(startIndex).populate('createdBy', 'name').sort({'createdAt' : -1}).select("-verification_code -deletedAt -activated -createdBy").populate('specialization')
+
+             if (patient !== undefined) {
+                results.results = await model.find({ deletedAt: null, patient_id: patient }).limit(limit).skip(startIndex)
+                    .populate('createdBy', 'name')
+                    .sort({ 'createdAt': -1 })
+                    .select(" -deletedAt ")
                     .exec()
                 res.paginate = { results }
                 next()
 
             }
 
-           
             else {
-                results.results = await model.find({ deletedAt: null }).limit(limit).skip(startIndex).populate('createdBy', 'name').sort({'createdAt' : -1}).select("-verification_code -deletedAt -activated -createdBy").populate('specialization')
+                results.results = await model.find({ deletedAt: null }).limit(limit).skip(startIndex)
+                    .populate('createdBy', 'name')
+                    .sort({ 'createdAt': -1 })
                     .exec()
                 res.paginate = { results }
                 next()
             }
 
         } catch (error) {
+            console.log(error)
             res.status(400).json({ message: error.message })
         }
 

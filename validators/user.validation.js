@@ -8,7 +8,7 @@ export const validateUserInput = (data) => {
     data.name = !isEmpty(data.name) && data.name !== undefined ? data.name : '';
     data.phone_number = !isEmpty(data.phone_number) && data.phone_number !== undefined ? data.phone_number : '';
     data.role = !isEmpty(data.role) && data.role !== undefined ? data.role : '';
-    data.dob = !isEmpty(data.dob) && data.dob !== undefined ? data.dob : '';
+    data.age = !isEmpty(data.age) && data.age !== undefined ? data.age : '';
     data.gender = !isEmpty(data.gender) && data.gender !== undefined ? data.gender : '';
     data.ID_no = !isEmpty(data.ID_no) && data.ID_no !== undefined ? data.ID_no : '';
     data.password = !isEmpty(data.password) && data.password !== undefined ? data.password : '';
@@ -23,14 +23,14 @@ export const validateUserInput = (data) => {
     if (Validator.isEmpty(data.role)) {
         errors.role = 'Enter user role';
     }
-    if (Validator.isEmpty(data.dob)) {
-        errors.dob = 'Enter date of birth';
+    if (Validator.isEmpty(data.age)) {
+        errors.age = 'Enter Age';
     }
     // if (Validator.isEmpty(data.ID_no)) {
     //     errors.ID_no = 'Enter date of birth';
     // }
-    // if (Validator.isEmpty(data.dob)) {
-    //     errors.dob = 'Enter date of birth';
+    // if (Validator.isEmpty(data.age)) {
+    //     errors.age = 'Enter date of birth';
     // }
     if (Validator.isEmpty(data.gender)) {
         errors.gender = 'Select gender ';
@@ -67,7 +67,7 @@ export const validateGuardianInput = (data) => {
     data.name = !isEmpty(data.name) && data.name !== undefined ? data.name : '';
     data.phone_number = !isEmpty(data.phone_number) && data.phone_number !== undefined ? data.phone_number : '';
     data.role = !isEmpty(data.role) && data.role !== undefined ? data.role : '';
-    data.dob = !isEmpty(data.dob) && data.dob !== undefined ? data.dob : '';
+    data.age = !isEmpty(data.age) && data.age !== undefined ? data.age : '';
     data.gender = !isEmpty(data.gender) && data.gender !== undefined ? data.gender : '';
     data.ID_no = !isEmpty(data.ID_no) && data.ID_no !== undefined ? data.ID_no : '';
     data.password = !isEmpty(data.password) && data.password !== undefined ? data.password : '';

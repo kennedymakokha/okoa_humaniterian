@@ -19,7 +19,7 @@ function Input({ label, min, required, value, disable, name, type, onChange }) {
         type={type === "password" && show ? "text" : type ? type : "text"}
         value={value}
         onChange={(e) => onChange(e.target.value, name)}
-        className={`flex py-2  items-center focus:outline-none bg-transparent focus:bg-transparent  focus:ring-0 focus:ring-offset-0 w-full`}
+        className={`flex py-2 ${disable && "text-slate-500"} items-center focus:outline-none bg-transparent focus:bg-transparent  focus:ring-0 focus:ring-offset-0 w-full`}
       />
       {type === "password" && (
         <div

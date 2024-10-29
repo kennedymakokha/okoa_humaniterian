@@ -10,13 +10,17 @@ const patientSchema = new Schema({
     phone_number: {
         type: String
     },
+    reg_no: {
+        type: String
+    },
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "user_tb",
     },
-    guardian: {
-        type: Schema.Types.ObjectId,
-        ref: "guardian_tb",
+    state: {
+        type: String,
+        enum: ["checked-in", "triage-table", "doctors-table", "lab", "pharmacy", "admitted", "discharged"],
+        default: "checked-in"
     },
     email: {
         type: String
@@ -29,8 +33,8 @@ const patientSchema = new Schema({
     paid: {
         type: Boolean,
         default: false
-    }, 
-    dob: {
+    },
+    age: {
         type: String,
     },
     gender: {
@@ -47,5 +51,5 @@ const patientSchema = new Schema({
 }, { timestamps: true });
 
 
-const Model = mongoose.model('user_tb', patientSchema);
+const Model = mongoose.model('patients_tb', patientSchema);
 export default Model
