@@ -20,6 +20,6 @@ router.route('/:id')
     .put(isAuth, update_user)
 router.route('/admit/:id')
     .put(isAuth, admit_patient)
-// .get(protect, getArea)
+
 
 export default router 

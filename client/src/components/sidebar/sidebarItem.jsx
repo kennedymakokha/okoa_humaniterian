@@ -73,7 +73,7 @@ export const Sidebar = ({ navItems }) => {
                             "my-2 flex flex-col gap-2 items-stretch": true,
                         })}
                     >
-                        {navItems.map((item, index) => {
+                        {navItems?.map((item, index) => {
                             return (
                                 <li
                                     key={index}

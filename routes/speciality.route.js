@@ -14,5 +14,5 @@ router.route('/')
 router.route('/:id')
     .delete(isAuth, delete_specility)
     .put(isAuth, update_specility)
-// .get(protect, getArea)
+
 export default router 

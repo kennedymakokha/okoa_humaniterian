@@ -19,7 +19,7 @@ const patientSchema = new Schema({
     },
     state: {
         type: String,
-        enum: ["checked-in", "triage-table", "doctors-table", "lab", "pharmacy", "admitted", "discharged"],
+        enum: ["checked-in", "triage-table", "doctors-table", "lab","doctors-table_after", "pharmacy", "admitted", "discharged"],
         default: "checked-in"
     },
     email: {

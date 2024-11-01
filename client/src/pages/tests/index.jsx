@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Table from '../../components/table';
 import Create_Modal from '../../components/modals/create_modal';
-import Input from '../../components/modals/input';
+import Input, { TextArea } from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
-import { useCreate_specialityMutation, useDelete_specialityMutation, useFetch_specialitysQuery, useUpdate_specialityMutation } from '../../features/slices/specialitySlice';
+import { useCreate_testsMutation, useDelete_testsMutation, useFetch_testssQuery, useUpdate_testsMutation } from '../../features/slices/testSlice';
 
 
 
@@ -12,27 +12,29 @@ function index() {
     const [show, setShow] = useState(false)
     const [err, setError] = useState(undefined)
     const initialState = {
-        speciality_name: "",
-        consultation_fee: 0
+        test_name: "",
+        test_fee: 0,
+        desc:""
     }
     const [item, setItem] = useState(initialState)
     const columns = [
-        { Header: 'Speciality', accessor: 'speciality_name' },
-        { Header: 'consultation', accessor: 'consultation_fee' },
+        { Header: 'tests', accessor: 'test_name' },
+        { Header: 'consultation', accessor: 'test_fee' },
 
     ];
     const [filter, setFilter] = useState({
         page: 1, limit: 7,
         activeTab: 1,
         pageNumber: 0,
+
         word: "",
     })
-    const { data, isLoading, isSuccess, refetch } = useFetch_specialitysQuery(filter)
+    const { data, isLoading, isSuccess, refetch } = useFetch_testssQuery(filter)
 
-    const [Postspeciality, isFetching, error] = useCreate_specialityMutation()
-    const [Updatespeciality] = useUpdate_specialityMutation()
+    const [Posttests, isFetching, error] = useCreate_testsMutation()
+    const [Updatetests] = useUpdate_testsMutation()
 
-    const [Deletespeciality] = useDelete_specialityMutation()
+    const [Deletetests] = useDelete_testsMutation()
 
     const handleChange = (e, name) => {
         setItem(((prev) => ({
@@ -46,9 +48,9 @@ function index() {
         try {
             if (item._id) {
 
-                await Updatespeciality(item).unwrap()
+                await Updatetests(item).unwrap()
             } else {
-                await Postspeciality(item).unwrap()
+                await Posttests(item).unwrap()
             }
 
             await refetch()
@@ -62,7 +64,7 @@ function index() {
     }
     const submitDelete = async () => {
         try {
-            await Deletespeciality(item._id).unwrap()
+            await Deletetests(item._id).unwrap()
             await refetch()
             setItem(initialState)
             setShow(false)
@@ -81,7 +83,7 @@ function index() {
     return (
         <>
 
-            <Table notLinkable isLoading={isLoading} key_column="speciality_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="specialities Offered" data={isSuccess && data !== undefined ? data.results.results
+            <Table notLinkable isLoading={isLoading} key_column="test_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Lab Test Offered" data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
@@ -91,19 +93,21 @@ function index() {
                 item={item}
                 error={isFetching?.error?.data?.message}
                 body={<div className='gap-y-2 flex flex-col'>
-                    <Input label="speciality" name="speciality_name" value={item.speciality_name} onChange={handleChange} />
-                    <Input label="Fee" name="consultation_fee" value={item.speciality_duration} type="number" onChange={handleChange} />
-
+                    <Input label="Test" required name="test_name" value={item.test_name} onChange={handleChange} />
+                    <Input label="Fee" required name="test_fee" value={item.test_fee} type="number" onChange={handleChange} />
+                    <TextArea label="Description" name="desc" value={item.desc}  onChange={handleChange} />
                 </div>}
-                name="speciality" setPopUp={setPopUp} />}
+                name="tests" setPopUp={setPopUp} />}
             {show && <Delete_Modal
                 item={item}
                 submit={submitDelete}
                 cancel={cancel}
-                name="speciality" setPopUp={setShow} />}
+                name="tests" setPopUp={setShow} />}
         </>
 
     )
 }
 
 export default index
+
+

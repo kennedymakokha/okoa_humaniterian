@@ -16,6 +16,6 @@ router.route('/:id')
     .put(isAuth, update_user)
 router.route('/enroll/:id')
     .put(isAuth, Enroll_user)
-// .get(protect, getArea)
+
 router.route('/login').post(login_user)
 export default router 

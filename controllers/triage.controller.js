@@ -21,6 +21,14 @@ export const get_triage = expressAsyncHandler(async (req, res) => {
     }
 })
 
+export const fetch_triage = expressAsyncHandler(async (req, res) => {
+    try {
+        const alltriage = await User.find({ patient_id: req.params.id }).sort({ createdAt: -1 })
+        return res.status(200).json(alltriage)
+    } catch (error) {
+        console.log(error)
+    }
+})
 export const create_triage = expressAsyncHandler(async (req, res) => {
     try {
         CustomError(validateTriageInput, req.body, res)

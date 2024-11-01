@@ -14,8 +14,8 @@ import { logout } from "../features/slices/authSlice";
 import { NavbarProvider, useNavbar } from "../context/sideBar.context";
 // import { Bars3Icon } from "@heroicons/react/24/outline";
 const Layout = (props) => {
-    // const [collapsed, setSidebarCollapsed] = useState(false);
-    const { collapsed, toggleNavbar } = useNavbar();
+    const [collapsed, setSidebarCollapsed] = useState(false);
+    // const { collapsed, toggleNavbar } = useNavbar();
     const location = useLocation();
 
     const { userInfo } = useSelector((state) => state.auth)

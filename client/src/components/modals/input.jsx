@@ -68,6 +68,31 @@ function Input({ label, min, required, value, disable, name, type, onChange }) {
   );
 }
 
+export function TextArea({ label, min, required, value, disable, name, type, onChange }) {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="flex w-full px-2 items-center justify-center gap-x-2 rounded-md border md:border-slate-200 border-blue-800">
+      <div className="flex capitalize md:text-slate-500 text-slate-50  font-bold ">
+        {/* {label}{" "} */}
+        {required === true && (
+          <span className="text-red-500  font-bold">* </span>
+        )}
+      </div>
+      <textarea
+        max={min}
+        name={name}
+        disabled={disable}
+        placeholder={label}
+        type={type === "password" && show ? "text" : type ? type : "text"}
+        value={value}
+        onChange={(e) => onChange(e.target.value, name)}
+        className={`flex py-2 ${disable && "text-slate-500"} items-center focus:outline-none bg-transparent focus:bg-transparent  focus:ring-0 focus:ring-offset-0 w-full`}
+      />
+    
+    </div>
+  );
+}
+
 export const SelectContainer = ({
   array,
   name,

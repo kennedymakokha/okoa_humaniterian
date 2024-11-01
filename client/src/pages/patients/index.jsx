@@ -60,7 +60,7 @@ function index() {
     const [EnrolUser] = useAdmit_patientMutation()
 
     const [filter, setFilter] = useState({
-        page: 1, limit: 7,
+        page: 1, limit: 10,
         activeTab: 1,
         pageNumber: 0,
         word: "",

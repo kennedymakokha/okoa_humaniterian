@@ -5,7 +5,7 @@ import Input, { SelectContainer } from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
 import { useFetch_coursesQuery } from '../../features/slices/cousesSlice';
 import { useCreate_triageMutation, useDelete_triageMutation, useFetch_triagesQuery, useUpdate_triageMutation } from '../../features/slices/triageSlice';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
 import SelectInput from '../../components/SelectInput';
 import Payment_Modal from '../../components/modals/payment_modal';
@@ -19,15 +19,16 @@ function index() {
 
 
     const location = useLocation()
+    const navigate = useNavigate()
     const { details } = location.state
-    console.log(details)
+
     const initialState = {
         patient_id: details._id,
-        temp: 0,
-        bloodpressure: 0,
-        height: 0,
-        bloodsugar: 0,
-        weight: 0,
+        temp: null,
+        bloodpressure: null,
+        height: null,
+        bloodsugar: null,
+        weight: null,
     }
 
     const [item, setItem] = useState(initialState)
@@ -60,23 +61,11 @@ function index() {
         })))
     }
 
-
     const submit = async () => {
         try {
-            // {
-            //     lowerValue: 0,
-            //     upperValue: 0
-            // }
-            let response
-            if (item._id) {
-                await UpdateUser(item).unwrap()
-            }
-            else {
-                await Post_user(item).unwrap()
-
-            }
+            await Post_user(item).unwrap()
             await refetch()
-            setPopUp(false)
+            navigate('/triage')
             setItem(initialState)
         } catch (error) {
             setError(error?.data?.message)
@@ -84,7 +73,7 @@ function index() {
     }
     return (
         <>
-            <Table editOnly notLinkable  isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title={`${details.name} triages`} data={isSuccess && data !== undefined ? data.results.results
+            <Table editOnly notLinkable isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title={`${details.name} triages`} data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
@@ -93,7 +82,6 @@ function index() {
                 submit={submit}
                 cancel={() => console.log(item)}
                 submitName="Continue"
-                // cancel={() => setItem(initialState)}
                 item={item}
                 body={<div className='gap-y-2 flex w-full flex-col'>
                     <div className="flex gap-2">
@@ -101,19 +89,15 @@ function index() {
                     </div>
                     <div className="flex gap-2">
                         <Input label="Height(ft)" required name="height" value={item.height} onChange={handleChange} />
-
                     </div>
                     <div className="flex gap-x-2">
                         <Input label="Blood Sugar(mmol/L)" required name="bloodsugar" value={item.bloodsugar} onChange={handleChange} />
                     </div>
                     <div className="flex gap-2">
                         <Input label="Temp()" required name="temp" value={item.temp} onChange={handleChange} />
-
                     </div>
                     <div className="flex gap-x-2">
                         <Input label="blood pressure(mmHg)" required name="bloodpressure" value={item.bloodpressure} onChange={handleChange} />
-
-
                     </div>
 
                 </div>}

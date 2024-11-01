@@ -14,6 +14,9 @@ export const triageApiSlice = apiSlice.injectEndpoints({
         fetch_triages: builder.query({
             query: (data) => `${USER_URL}?page=${data.page}&limit=${data.limit}&word=${data.word}&patient=${data.patient}`
         }),
+        fetch_patient_triages: builder.query({
+            query: (data) => `${USER_URL}/${data}`
+        }),
         update_triage: builder.mutation({
             query: (data) => ({
                 url: `${USER_URL}/${data._id}`,
@@ -31,4 +34,4 @@ export const triageApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useCreate_triageMutation, useDelete_triageMutation, useFetch_triagesQuery, useUpdate_triageMutation } = triageApiSlice
+export const {useFetch_patient_triagesQuery, useCreate_triageMutation, useDelete_triageMutation, useFetch_triagesQuery, useUpdate_triageMutation } = triageApiSlice

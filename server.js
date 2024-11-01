@@ -16,7 +16,9 @@ import user_routes from './routes/users.route.js'
 import finance_routes from './routes/finance.route.js'
 import patients_routes from './routes/patients.route.js'
 import triage_routes from './routes/triage.route.js'
-
+import tests_routes from './routes/tests.route.js'
+import drug_routes from './routes/drugs.route.js'
+import lab_tests_routes from './routes/labtests.route.js'
 import events from 'events'
 
 
@@ -47,11 +49,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
 // app.use('/api/courses', course_routes)
+app.use('/api/tests', tests_routes)
+app.use('/api/lab-tests', lab_tests_routes)
 app.use('/api/triage', triage_routes)
 app.use('/api/speciality', speciality_routes)
 app.use('/api/users', user_routes)
-
-
+app.use('/api/drugs', drug_routes)
 app.use('/api/finances', finance_routes)
 app.use('/api/patients', patients_routes)
 

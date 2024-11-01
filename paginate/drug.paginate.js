@@ -38,7 +38,7 @@ const paginated = (model) => {
             var searchKey = new RegExp(`${word}`, 'i')
 
             if (word) {
-                results.results = await model.find({ deletedAt: null, $or: [{ speciality_name: searchKey }] }).limit(limit).skip(startIndex)
+                results.results = await model.find({ deletedAt: null, $or: [{ drug_name: searchKey }] }).limit(limit).skip(startIndex)
                     .populate('createdBy', 'name')
                     .sort({ 'createdAt': -1 })
                     .select(" -deletedAt ")
@@ -50,7 +50,7 @@ const paginated = (model) => {
 
             else {
                 results.results = await model.find({ deletedAt: null }).limit(limit).skip(startIndex)
-                    // .populate('createdBy', 'name')
+                    .populate('createdBy', 'name')
                     .sort({ 'createdAt': -1 })
                     .exec()
                 res.paginate = { results }

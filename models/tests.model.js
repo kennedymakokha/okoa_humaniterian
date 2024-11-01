@@ -1,15 +1,19 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs'
+
+
 const Schema = mongoose.Schema;
 const CourseSchema = new Schema({
-    speciality_name: {
+    test_name: {
         type: String,
     },
-    consultation_fee: {
+    test_fee: {
         type: Number,
     },
     desc: {
         type: String,
     },
+   
     deletedAt: {
         type: String,
         default: null,
@@ -20,5 +24,5 @@ const CourseSchema = new Schema({
     },
 }, { timestamps: true });
 
-const Model = mongoose.model('speciality_tb', CourseSchema);
+const Model = mongoose.model('tests_tb', CourseSchema);
 export default Model

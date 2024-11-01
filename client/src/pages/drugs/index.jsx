@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Table from '../../components/table';
 import Create_Modal from '../../components/modals/create_modal';
-import Input from '../../components/modals/input';
+import Input, { TextArea } from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
-import { useCreate_specialityMutation, useDelete_specialityMutation, useFetch_specialitysQuery, useUpdate_specialityMutation } from '../../features/slices/specialitySlice';
+import { useCreate_drugsMutation,useDelete_drugsMutation,useFetch_drugsQuery,useUpdate_drugsMutation} from '../../features/slices/drugSlice';
 
 
 
@@ -12,27 +12,29 @@ function index() {
     const [show, setShow] = useState(false)
     const [err, setError] = useState(undefined)
     const initialState = {
-        speciality_name: "",
-        consultation_fee: 0
+        drug_name: "",
+        price: null,
+        
     }
     const [item, setItem] = useState(initialState)
     const columns = [
-        { Header: 'Speciality', accessor: 'speciality_name' },
-        { Header: 'consultation', accessor: 'consultation_fee' },
+        { Header: 'Name', accessor: 'drug_name' },
+        { Header: 'price', accessor: 'price' },
 
     ];
     const [filter, setFilter] = useState({
         page: 1, limit: 7,
         activeTab: 1,
         pageNumber: 0,
+
         word: "",
     })
-    const { data, isLoading, isSuccess, refetch } = useFetch_specialitysQuery(filter)
+    const { data, isLoading, isSuccess, refetch } = useFetch_drugsQuery(filter)
 
-    const [Postspeciality, isFetching, error] = useCreate_specialityMutation()
-    const [Updatespeciality] = useUpdate_specialityMutation()
+    const [Posttests, isFetching, error] = useCreate_drugsMutation()
+    const [Updatetests] = useUpdate_drugsMutation()
 
-    const [Deletespeciality] = useDelete_specialityMutation()
+    const [Deletetests] = useDelete_drugsMutation()
 
     const handleChange = (e, name) => {
         setItem(((prev) => ({
@@ -46,9 +48,9 @@ function index() {
         try {
             if (item._id) {
 
-                await Updatespeciality(item).unwrap()
+                await Updatetests(item).unwrap()
             } else {
-                await Postspeciality(item).unwrap()
+                await Posttests(item).unwrap()
             }
 
             await refetch()
@@ -62,7 +64,7 @@ function index() {
     }
     const submitDelete = async () => {
         try {
-            await Deletespeciality(item._id).unwrap()
+            await Deletetests(item._id).unwrap()
             await refetch()
             setItem(initialState)
             setShow(false)
@@ -80,8 +82,7 @@ function index() {
 
     return (
         <>
-
-            <Table notLinkable isLoading={isLoading} key_column="speciality_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="specialities Offered" data={isSuccess && data !== undefined ? data.results.results
+            <Table notLinkable isLoading={isLoading} key_column="drug_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Lab Test Offered" data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
@@ -91,19 +92,21 @@ function index() {
                 item={item}
                 error={isFetching?.error?.data?.message}
                 body={<div className='gap-y-2 flex flex-col'>
-                    <Input label="speciality" name="speciality_name" value={item.speciality_name} onChange={handleChange} />
-                    <Input label="Fee" name="consultation_fee" value={item.speciality_duration} type="number" onChange={handleChange} />
-
+                    <Input label="Name" required name="drug_name" value={item.drug_name} onChange={handleChange} />
+                    <Input label="Price" required name="price" value={item.price} type="number" onChange={handleChange} />
+                  
                 </div>}
-                name="speciality" setPopUp={setPopUp} />}
+                name="Drug" setPopUp={setPopUp} />}
             {show && <Delete_Modal
                 item={item}
                 submit={submitDelete}
                 cancel={cancel}
-                name="speciality" setPopUp={setShow} />}
+                name="tests" setPopUp={setShow} />}
         </>
 
     )
 }
 
 export default index
+
+
