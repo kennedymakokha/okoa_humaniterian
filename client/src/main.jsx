@@ -28,6 +28,7 @@ import DataAnalisis from './pages/dataAnalisis.jsx'
 import { Provider } from 'react-redux'
 import { store } from './store.js'
 import { NavbarProvider } from './context/sideBar.context.jsx'
+import Unauthorized from './pages/unauthorized.jsx'
 const rootFontStyle = {
   // fontSize: '29px',
   // fontFamily: "RalewayDots-Regular",
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <Users />,
+      },
+      {
+        path: "unauthorized",
+        element: <Unauthorized />,
       },
       {
         path: "specialities",

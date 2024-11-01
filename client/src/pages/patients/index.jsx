@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
 import SelectInput from '../../components/SelectInput';
 import Payment_Modal from '../../components/modals/payment_modal';
+import { socket } from '../root';
 function index() {
     const [popUp, setPopUp] = useState(false)
     const [show, setShow] = useState(false)
@@ -94,6 +95,8 @@ function index() {
             setPaying(!paying)
             await Post_user(item).unwrap()
             setTimeout(() => closePay(), 6000);
+            await refetch()
+            socket.emit("hello", "triage-table");
 
         } catch (error) {
 
@@ -112,6 +115,7 @@ function index() {
                
             }
             await refetch()
+            socket.emit("hello", "triage-table");
             setPopUp(false)
             // setItem(initialState)
         } catch (error) {

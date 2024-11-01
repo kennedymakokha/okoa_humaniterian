@@ -21,8 +21,13 @@ const Lab = (http) => {
         socket.on('chat message', (msg) => {
             console.log('message: ' + msg);
         });
+
         socket.on('typing', () => {
             console.log('Typing: ');
+        });
+
+        socket.on('hello', (e) => {
+            io.emit('update_patients', e);
         });
         // socket.on('publishing', async (msg) => {
         //     let result;

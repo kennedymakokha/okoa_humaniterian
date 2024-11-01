@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
 import SelectInput from '../../components/SelectInput';
 import Payment_Modal from '../../components/modals/payment_modal';
+import { socket } from '../root';
 function index() {
     const [popUp, setPopUp] = useState(false)
     const [show, setShow] = useState(false)
@@ -66,6 +67,8 @@ function index() {
             await Post_user(item).unwrap()
             await refetch()
             navigate('/triage')
+           
+            socket.emit("hello", "doctors-table");
             setItem(initialState)
         } catch (error) {
             setError(error?.data?.message)

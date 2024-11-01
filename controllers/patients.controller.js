@@ -84,6 +84,21 @@ export const delete_user = expressAsyncHandler(async (req, res) => {
 
     }
 })
+export const count_patients = expressAsyncHandler(async (req, res) => {
+    try {
+        let patients = await User.find({ deletedAt: null })
+        let triage_table = patients.filter(e => e.state == "triage-table").length
+        let doctors_table = patients.filter(e => e.state == "doctors-table").length
+        let lab = patients.filter(e => e.state == "lab").length
+        let doctors_table_after = patients.filter(e => e.state == "doctors-table-after").length
+        let pharmacy = patients.filter(e => e.state == "pharmacy").length
+        // "triage-table", "doctors-table", "lab", "doctors-table_after", "pharmacy"
+        return res.status(200).json({ triage: triage_table, doctableB4: doctors_table, lab: lab, doctableafter: doctors_table_after, pharmacy: pharmacy })
+    } catch (error) {
+        return res.status(404);
+
+    }
+})
 
 export const update_user = expressAsyncHandler(async (req, res) => {
     try {

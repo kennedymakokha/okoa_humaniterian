@@ -11,19 +11,22 @@ import Login from "./login";
 import { useLogoutMutation } from "../features/slices/usersApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/slices/authSlice";
-import { NavbarProvider, useNavbar } from "../context/sideBar.context";
+import { io } from "socket.io-client";
+import { setCount } from './../features/slices/authSlice';
+import { useGet_patients_countQuery } from "../features/slices/patientsSlice";
+export const socket = io(`http://localhost:5000/`);
 // import { Bars3Icon } from "@heroicons/react/24/outline";
 const Layout = (props) => {
     const [collapsed, setSidebarCollapsed] = useState(false);
     // const { collapsed, toggleNavbar } = useNavbar();
     const location = useLocation();
 
-    const { userInfo } = useSelector((state) => state.auth)
 
+    const { userInfo } = useSelector((state) => state.auth)
+    console.log(userInfo)
     const navigate = useNavigate()
     const [logoutApiCall] = useLogoutMutation();
     const dispatch = useDispatch()
-
     const LogOutHandler = async () => {
         try {
             // await logoutApiCall({ token: "token" }).unwrap()
@@ -33,6 +36,27 @@ const Layout = (props) => {
             console.log(error)
         }
     }
+    useEffect(() => {
+        if (MenuItems.filter(item => !item.roles.includes(`${userInfo.role}`))) {
+            navigate("/unauthorized")
+        }
+    }, [])
+  
+
+    useEffect(() => {
+        socket.on("connect", () => {
+            console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+        });
+
+        socket.on("disconnect", () => {
+            console.log(socket.id); // undefined
+        });
+
+
+
+    }, [])
+
+
 
     return (
         < >
@@ -61,7 +85,7 @@ const Layout = (props) => {
                                 Logout</span>
                         </div>
                         <div className="px-4">
-                      
+
                             <Outlet />
                         </div>
 

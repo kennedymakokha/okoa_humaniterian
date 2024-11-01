@@ -14,6 +14,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 }
             }
         }),
+      
         validate_input_patients: builder.mutation({
             query: (data) => {
 
@@ -53,6 +54,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USER_URL}/${id}`
             })
         }),
+        get_patients_count: builder.query({
+            query: () => ({
+                url: `${USER_URL}/count_patients`
+            })
+        }),
         get_patients: builder.query({
             query: (data) => `${USER_URL}?page=${data.page}&limit=${data.limit}&word=${data.word}&state=${data.state}`
         }),
@@ -67,4 +73,4 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useValidate_input_patientsMutation, usePost_guardianMutation, usePost_patientsMutation, useAdmit_patientMutation, useDelete_patientMutation, useEdit_patientMutation, useFetch_patientQuery, useGet_patientsQuery, } = usersApiSlice
+export const {useGet_patients_countQuery, useValidate_input_patientsMutation, usePost_guardianMutation, usePost_patientsMutation, useAdmit_patientMutation, useDelete_patientMutation, useEdit_patientMutation, useFetch_patientQuery, useGet_patientsQuery, } = usersApiSlice

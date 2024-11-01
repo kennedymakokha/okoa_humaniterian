@@ -6,6 +6,7 @@ import SelectInput from '../../components/SelectInput';
 import { useFetch_testssQuery } from '../../features/slices/testSlice';
 import { usePost_testsMutation } from '../../features/slices/labtestSlice';
 import { HeaderItem } from '../../components/headerItem';
+import { socket } from '../root';
 
 function index() {
     const [popUp, setPopUp] = useState(false)
@@ -44,6 +45,7 @@ function index() {
         try {
             await Post_user(item).unwrap()
             // await refetch()
+            socket.emit("hello", "lab");
             navigate('/doctors-desk')
         } catch (error) {
             setError(error?.data?.message)

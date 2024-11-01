@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useFetch_lab_testQuery, useFetch_observationsQuery, usePost_resultsMutation } from '../../features/slices/labtestSlice';
 import { HeaderItem } from '../../components/headerItem';
 import axios from 'axios';
+import { socket } from '../root';
 function index() {
     const navigate = useNavigate()
     const [show, setShow] = useState(1)
@@ -20,10 +21,8 @@ function index() {
         try {
             await Post_user({ tests: item, patient_id: details._id }).unwrap()
             await refetch()
+            socket.emit("hello", "doctors-table-after");
             navigate("/laboratory")
-
-            // setPopUp(false)
-            // setItem(initialState)
         } catch (error) {
             console.log(error)
             setError(error?.data?.message)

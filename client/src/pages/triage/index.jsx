@@ -9,10 +9,11 @@ import { useLocation } from 'react-router-dom';
 import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
 import SelectInput from '../../components/SelectInput';
 import Payment_Modal from '../../components/modals/payment_modal';
+import { socket } from '../root';
 function index() {
     const [popUp, setPopUp] = useState(false)
     const [show, setShow] = useState(false)
-   
+
 
     const columns = [
         { Header: 'Reg No', accessor: 'reg_no' },
@@ -25,19 +26,25 @@ function index() {
         activeTab: 1,
         pageNumber: 0,
         word: "",
-        state:"triage-table"
+        state: "triage-table"
 
 
     })
     const { data, refetch, isSuccess, isLoading, } = useGet_patientsQuery(filter)
+    useEffect(() => {
+        socket.on("update_patients", (e) => {
+            setFilter(prev=>({...prev,state:e}))
+            refetch()
+        })
+    }, [])
 
     return (
         <>
-            <Table noAdd noAction  editOnly isLoading={isLoading && !isSuccess} key_column="name" columns={columns}  title="Triages" data={isSuccess && data !== undefined ? data.results.results
+            <Table noAdd noAction editOnly isLoading={isLoading && !isSuccess} key_column="name" columns={columns} title="Triages" data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
-        
+
 
         </>
 

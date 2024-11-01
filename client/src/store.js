@@ -5,6 +5,7 @@ import logger from 'redux-logger'
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        count:authReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(apiSlice.middleware),

@@ -95,7 +95,7 @@ export const login_user = expressAsyncHandler(async (req, res) => {
             user.token = token;
             user.name = `${userOBJ.name}`;
             user._id = userOBJ._id;
-            user.token = token
+            user.role = userOBJ.role;
             return res.status(200).json(user);
         }
     } catch (error) {

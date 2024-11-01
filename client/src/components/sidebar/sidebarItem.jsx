@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 // import { SidebarContext } from './index'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import cn from "classnames";
 import Logo from './../../assets/logo.png'
 import { useSelector } from 'react-redux';
 import { useNavbar } from './../../context/sideBar.context';
+import { useGet_patients_countQuery } from '../../features/slices/patientsSlice';
+import { socket } from '../../pages/root';
 
 export const Sidebar = ({ navItems }) => {
     const { collapsed, toggleNavbar } = useNavbar();
@@ -12,22 +14,27 @@ export const Sidebar = ({ navItems }) => {
     const Icon = collapsed ? "m8.25 4.5 7.5 7.5-7.5 7.5" : "M15.75 19.5 8.25 12l7.5-7.5";
     const navigate = useNavigate();
     let location = useLocation()
+    const { data, refetch } = useGet_patients_countQuery()
+    const [NewNavItems, setNewNavItems] = useState()
     useEffect(() => {
-
-        if (userInfo === null) {
-            navigate('/login?id=1213')
-            // if(userInfo.role === 'admin'){
-            //   navItems = navItems.filter(item => item.role === 'admin')
-            // }else if(userInfo.role === 'teacher'){
-            //   navItems = navItems.filter(item => item.role === 'teacher')
-            // }else if(userInfo.role === 'student'){
-            //   navItems = navItems.filter(item => item.role ==='student')
-            // }
-
+        const array = ["nurses", "doctors", "admin", "receptionists", "pharmacists", "lab tech", "accountants"]
+        if (userInfo !== null) {
+            // navigate('/login?id=1213')
+            for (let index = 0; index < array.length; index++) {
+                const element = array[index];
+                if (userInfo.role === `${element}`) {
+                    setNewNavItems(navItems.filter(item => item.roles.includes(`${element}`)))
+                }
+            }
         }
     }, [])
-    // console.log(location.pathname)
-
+    useEffect(() => {
+        socket.on("update_patients", (e) => {
+            // setCount()
+            refetch()
+        })
+    }, [])
+    console.log(data)
     return (
         <div
             className={cn({
@@ -73,7 +80,7 @@ export const Sidebar = ({ navItems }) => {
                             "my-2 flex flex-col gap-2 items-stretch": true,
                         })}
                     >
-                        {navItems?.map((item, index) => {
+                        {NewNavItems?.map((item, index) => {
                             return (
                                 <li
                                     key={index}
@@ -85,18 +92,23 @@ export const Sidebar = ({ navItems }) => {
                                         "rounded-full p-2 mx-3 w-10 h-10": collapsed,
                                     })}
                                 >
-                                    <Link to={item.url} className="flex gap-2  capitalize items-center">
-                                        <div className=" group size-6 relative z-0">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6`}>
-                                                <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-                                            </svg>
-                                            <div className={`absolute left-10  hidden    ${collapsed && "group-hover:flex"} inset-0 flex justify-center items-center z-10`}>
-                                                <div className="flex shadow-2xl  items-center justify-center p-2 bg-slate-100 rounded-sm text-blue-700 uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
+                                    <Link to={item.url} className="flex  capitalize items-center justify-between w-full">
+                                        <div className="flex gap-2  capitalize items-center">
+                                            <div className=" group size-6 relative z-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6`}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                                                </svg>
+                                                <div className={`absolute left-10  hidden    ${collapsed && "group-hover:flex"} inset-0 flex justify-center items-center z-10`}>
+                                                    <div className="flex shadow-2xl  items-center justify-center p-2 bg-slate-100 rounded-sm text-blue-700 uppercase"><p className="text-[10px] font-bold">{item.title}</p></div>
 
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <span>{!collapsed && item.title}</span>
+                                            <span>{!collapsed && item.title}</span>
+                                        </div>
+                                        <div className="flex  justify-center items-center  rounded-full">
+                                            {item.title === "Triage" ? data?.triage:item.title === "Laboratory" ? data?.lab : item.title === "Doctors Desk" ? `${data?.doctableB4}-${data?.doctableafter}` : ""}
+                                        </div>
                                     </Link>
                                 </li>
                             );
