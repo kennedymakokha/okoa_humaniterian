@@ -50,9 +50,9 @@ export const create_user = expressAsyncHandler(async (req, res) => {
             return res.status(400).json({ message: 'User Exists !! ' })
         }
         const systemUser = await Speciality.findOne({ speciality_name: "system user" })
-
-        req.body.specialization = req.body.speciality ? req.body.speciality : systemUser._id
-
+        if (req.body.role === "doctors") {
+            req.body.specialization = req.body.speciality ? req.body.speciality : systemUser._id
+        }
         req.body.createdBy = req.user._id
         req.body.verification_code = MakeActivationCode(5);
         req.body.reg_no = `HMS/2024/${req.body.role === "doctors" ? "DOC" : req.body.role === "nurses" ? "NUR" : req.body.role === "receptionists" ? "REC" : req.body.role === "pharmacists" ? "PHR" : req.body.role === "lab tech" ? "LAB" : req.body.role === "accountants" ? "ACC" : "GNR"}-${admi_no}`

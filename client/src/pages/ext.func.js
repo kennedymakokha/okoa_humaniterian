@@ -49,3 +49,5 @@ export const Repeat = (n, body) => {
 
   // return result
 }
+
+export const primaryColor = "#5559ce"

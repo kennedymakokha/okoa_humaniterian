@@ -36,7 +36,7 @@ export const create_user = expressAsyncHandler(async (req, res) => {
 
 
         const reg_no = newNumber.toString().padStart(4, '0');
-        req.body.createdBy = req.user._id
+        // req.body.createdBy = req.user._id
         req.body.reg_no = `HMS/2024/PNT-${reg_no}`
         let data = await User.create(req.body)
         // await Mpesa_stk(

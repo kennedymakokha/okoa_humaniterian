@@ -17,9 +17,13 @@ const patientSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "user_tb",
     },
+    area: {
+        type: Schema.Types.ObjectId,
+        ref: "areas_tb",
+    },
     state: {
         type: String,
-        enum: ["checked-in", "triage-table", "doctors-table", "lab","doctors-table-after", "pharmacy", "admitted", "discharged"],
+        enum: ["checked-in", "triage-table", "doctors-table", "lab", "doctors-table-after", "pharmacy", "admitted", "discharged"],
         default: "checked-in"
     },
     email: {

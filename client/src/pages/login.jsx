@@ -42,11 +42,11 @@ function Login() {
             setDisable(true)
         }
     }, [])
-    useEffect(() => {
-        if (userInfo !== null) {
-            navigate('/')
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (userInfo !== null) {
+    //         navigate('/')
+    //     }
+    // }, [])
 
     // let originalString = "HV";
     // let encodedString = btoa(originalString);

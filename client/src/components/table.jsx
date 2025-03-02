@@ -18,8 +18,8 @@ const Table = ({ columns, linkto, noExport, noAdd, editOnly, otherAction, noActi
         await refetch()
     }
     return (
-        <div className="py-10 ">
-            <div className="flex w-full bg-[#98daf8] shadow-2xl min-w-[70hw] overflow-hidden items-center p-2 justify-between">
+        <div className="py-1 ">
+            <div className="flex w-full  min-w-[70hw] overflow-hidden items-center p-2 justify-between">
                 <div className='flex items-center justify-center'>
                     <h4 className='font-bold uppercase text-center text-indigo-700'>{title}</h4> {isLoading && <Loader />}
                 </div>
@@ -37,7 +37,7 @@ const Table = ({ columns, linkto, noExport, noAdd, editOnly, otherAction, noActi
             {data?.length <= 0 ? <div className='flex items-center justify-center text-[#98daf8] '>
                 No Record found
             </div> : <table className="min-w-full bg-white border border-gray-200">
-                <thead className="bg-gray-200">
+                <thead className="bg-slate-100">
                     <tr>
                         {columns.map((column) => (
                             <th
@@ -108,7 +108,7 @@ const Table = ({ columns, linkto, noExport, noAdd, editOnly, otherAction, noActi
                     </tbody>}
             </table>}
             {
-                data?.length >= 0 && <div className="flex h-full w-full py-5 bg-blue-danger">
+                data?.length >= 0 && <div className="flex h-full w-full py-5 bg-blue-300">
                     <div className="flex w-1/2 items-center justify-between">
 
                         {paginate && <div className='flex'>

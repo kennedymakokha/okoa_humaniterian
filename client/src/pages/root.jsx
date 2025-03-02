@@ -14,6 +14,7 @@ import { logout } from "../features/slices/authSlice";
 import { io } from "socket.io-client";
 import { setCount } from './../features/slices/authSlice';
 import { useGet_patients_countQuery } from "../features/slices/patientsSlice";
+import AdminLayout from "../components/newsidebar/adminLayout";
 export const socket = io(`http://localhost:5000/`);
 // import { Bars3Icon } from "@heroicons/react/24/outline";
 const Layout = (props) => {
@@ -36,12 +37,12 @@ const Layout = (props) => {
             console.log(error)
         }
     }
-    useEffect(() => {
-        if (MenuItems.filter(item => !item.roles.includes(`${userInfo.role}`))) {
-            navigate("/unauthorized")
-        }
-    }, [])
-  
+    // useEffect(() => {
+    //     if (MenuItems.filter(item => !item.roles.includes(`${userInfo.role}`))) {
+    //         navigate("/unauthorized")
+    //     }
+    // }, [])
+
 
     useEffect(() => {
         socket.on("connect", () => {
@@ -59,39 +60,40 @@ const Layout = (props) => {
 
 
     return (
-        < >
-            {location.pathname === "/login" ? <Login /> :
-                <div
-                    className={classNames({
-                        // 👇 use grid layout
-                        "grid min-h-screen ": true,
-                        // 👇 toggle the width of the sidebar depending on the state
-                        "grid-cols-sidebar": !collapsed,
-                        "grid-cols-sidebar-collapsed": collapsed,
-                        // 👇 transition animation classes
+        // < >
+        //     {location.pathname === "/login" ? <Login /> :
+        //         <div
+        //             className={classNames({
+        //                 // 👇 use grid layout
+        //                 "grid min-h-screen ": true,
+        //                 // 👇 toggle the width of the sidebar depending on the state
+        //                 "grid-cols-sidebar": !collapsed,
+        //                 "grid-cols-sidebar-collapsed": collapsed,
+        //                 // 👇 transition animation classes
 
-                        "transition-[grid-template-columns]  duration-300 ease-in-out": true,
-                    })}
-                >
-                    {/* sidebar */}
+        //                 "transition-[grid-template-columns]  duration-300 ease-in-out": true,
+        //             })}
+        //         >
+        //             {/* sidebar */}
 
-                    <Sidebar navItems={MenuItems} collapsed={collapsed} setCollapsed={() => setSidebarCollapsed(prev => !prev)} />
+        //             <Sidebar navItems={MenuItems} collapsed={collapsed} setCollapsed={() => setSidebarCollapsed(prev => !prev)} />
 
-                    {/* content */}
-                    <div className="bg-gray-50">
-                        <div className={`flex w-full ${collapsed ? "h-[8%]" : "h-[10%]"} bg-[#98daf8] shadow-2xl  px-2 items-center justify-end`}>
-                            <span onClick={() => LogOutHandler()} className="bg-white cursor-pointer flex pointe items-center  gap-x-2 px-3 py-2 text-red-600 text-[14px] rounded-md shadow-2xl">
-                                <img src={Logout} alt="" className="w-5 h-5" />
-                                Logout</span>
-                        </div>
-                        <div className="px-4">
+        //             {/* content */}
+        //             <div className="bg-gray-50">
+        //                 <div className={`flex w-full ${collapsed ? "h-[8%]" : "h-[10%]"} bg-[#98daf8] shadow-2xl  px-2 items-center justify-end`}>
+        //                     <span onClick={() => LogOutHandler()} className="bg-white cursor-pointer flex pointe items-center  gap-x-2 px-3 py-2 text-red-600 text-[14px] rounded-md shadow-2xl">
+        //                         <img src={Logout} alt="" className="w-5 h-5" />
+        //                         Logout</span>
+        //                 </div>
+        //                 <div className="px-4">
 
-                            <Outlet />
-                        </div>
+        //                     <Outlet />
+        //                 </div>
 
-                    </div>
-                </div>}
-        </>
+        //             </div>
+        //         </div>}
+        // </>
+        <AdminLayout />
 
     );
 };

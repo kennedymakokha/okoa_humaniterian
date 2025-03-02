@@ -23,7 +23,7 @@ export const validateUserInput = (data) => {
     if (Validator.isEmpty(data.role)) {
         errors.role = 'Enter user role';
     }
-    if (Validator.isEmpty(data.age)) {
+    if (data.role === "patient" && Validator.isEmpty(data.age)) {
         errors.age = 'Enter Age';
     }
     // if (Validator.isEmpty(data.ID_no)) {

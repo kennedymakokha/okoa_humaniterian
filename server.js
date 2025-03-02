@@ -19,6 +19,7 @@ import triage_routes from './routes/triage.route.js'
 import tests_routes from './routes/tests.route.js'
 import drug_routes from './routes/drugs.route.js'
 import lab_tests_routes from './routes/labtests.route.js'
+import areas_routes from './routes/areas.route.js'
 import events from 'events'
 
 
@@ -51,6 +52,7 @@ app.use(cookieParser())
 // app.use('/api/courses', course_routes)
 app.use('/api/tests', tests_routes)
 app.use('/api/lab-tests', lab_tests_routes)
+app.use('/api/areas', areas_routes)
 app.use('/api/triage', triage_routes)
 app.use('/api/speciality', speciality_routes)
 app.use('/api/users', user_routes)

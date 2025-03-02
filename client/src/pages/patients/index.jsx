@@ -10,6 +10,7 @@ import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice
 import SelectInput from '../../components/SelectInput';
 import Payment_Modal from '../../components/modals/payment_modal';
 import { socket } from '../root';
+import { useFetch_areasQuery } from '../../features/slices/areaSlice';
 function index() {
     const [popUp, setPopUp] = useState(false)
     const [show, setShow] = useState(false)
@@ -26,6 +27,7 @@ function index() {
         pay_number: "",
         ID_no: "",
         age: "",
+        area: "",
         gender: "",
         dept: "",
         role: "patient",
@@ -70,7 +72,13 @@ function index() {
 
     })
     const { data, refetch, isSuccess, isLoading, } = useGet_patientsQuery(filter)
+    const { data: areas } = useFetch_areasQuery({
+        page: 1, limit: 200,
+        activeTab: 1,
+        pageNumber: 0,
+        word: "",
 
+    })
     const handleChange = (e, name) => {
         setError("")
         setItem(((prev) => ({
@@ -112,7 +120,7 @@ function index() {
                 await validate_user(item).unwrap()
                 setPay(true)
                 setItem(prev => ({ ...prev, pay_number: item.phone_number }))
-               
+
             }
             await refetch()
             socket.emit("hello", "triage-table");
@@ -203,6 +211,15 @@ function index() {
                             })))
                         }}
                             lable_holder="speciality_name" options={studentsSuccess && specialities !== undefined ? specialities.results.results : []} />
+                    </div>
+                    <div className="flex gap-x-2">
+                        {/* <Input label="Age" required name="age" value={item.age} onChange={handleChange} /> */}
+                        <SelectInput label="Area" searches="area" value_holder="_id" handleChange={(e) => {
+                            setItem(((prev) => ({
+                                ...prev, area: e,
+                            })))
+                        }}
+                            lable_holder="area_name" options={studentsSuccess && specialities !== undefined ? areas.results.results : []} />
                     </div>
 
                 </div>}

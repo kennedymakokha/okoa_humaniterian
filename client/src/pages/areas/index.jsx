@@ -3,7 +3,7 @@ import Table from '../../components/table';
 import Create_Modal from '../../components/modals/create_modal';
 import Input, { TextArea } from '../../components/modals/input';
 import Delete_Modal from '../../components/modals/delete_modal';
-import { useCreate_drugsMutation,useDelete_drugsMutation,useFetch_drugsQuery,useUpdate_drugsMutation} from '../../features/slices/drugSlice';
+import { useCreate_areasMutation, useDelete_areasMutation, useFetch_areasQuery, useUpdate_areasMutation } from '../../features/slices/areaSlice';
 
 
 
@@ -12,15 +12,14 @@ function index() {
     const [show, setShow] = useState(false)
     const [err, setError] = useState(undefined)
     const initialState = {
-        drug_name: "",
-        price: null,
-        
+        area_name: "",
+      
+        desc: ""
     }
     const [item, setItem] = useState(initialState)
     const columns = [
-        { Header: 'Name', accessor: 'drug_name' },
-        { Header: 'price', accessor: 'price' },
-
+        { Header: 'areas', accessor: 'area_name' },
+        { Header: 'Description', accessor: 'desc' },
     ];
     const [filter, setFilter] = useState({
         page: 1, limit: 7,
@@ -29,12 +28,12 @@ function index() {
 
         word: "",
     })
-    const { data, isLoading, isSuccess, refetch } = useFetch_drugsQuery(filter)
+    const { data, isLoading, isSuccess, refetch } = useFetch_areasQuery(filter)
 
-    const [Posttests, isFetching, error] = useCreate_drugsMutation()
-    const [Updatetests] = useUpdate_drugsMutation()
+    const [Postareas, isFetching, error] = useCreate_areasMutation()
+    const [Updateareas] = useUpdate_areasMutation()
 
-    const [Deletetests] = useDelete_drugsMutation()
+    const [Deleteareas] = useDelete_areasMutation()
 
     const handleChange = (e, name) => {
         setItem(((prev) => ({
@@ -48,9 +47,9 @@ function index() {
         try {
             if (item._id) {
 
-                await Updatetests(item).unwrap()
+                await Updateareas(item).unwrap()
             } else {
-                await Posttests(item).unwrap()
+                await Postareas(item).unwrap()
             }
 
             await refetch()
@@ -64,7 +63,7 @@ function index() {
     }
     const submitDelete = async () => {
         try {
-            await Deletetests(item._id).unwrap()
+            await Deleteareas(item._id).unwrap()
             await refetch()
             setItem(initialState)
             setShow(false)
@@ -82,7 +81,8 @@ function index() {
 
     return (
         <>
-            <Table notLinkable isLoading={isLoading} key_column="drug_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Drugs " data={isSuccess && data !== undefined ? data.results.results
+
+            <Table notLinkable isLoading={isLoading} key_column="area_name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title="Areas" data={isSuccess && data !== undefined ? data.results.results
                 : []}
                 paginate={data?.results?.pager} filter={filter} refetch={refetch} setFilter={setFilter}
             />
@@ -92,16 +92,16 @@ function index() {
                 item={item}
                 error={isFetching?.error?.data?.message}
                 body={<div className='gap-y-2 flex flex-col'>
-                    <Input label="Name" required name="drug_name" value={item.drug_name} onChange={handleChange} />
-                    <Input label="Price" required name="price" value={item.price} type="number" onChange={handleChange} />
-                  
+                    <Input label="Area" required name="area_name" value={item.area_name} onChange={handleChange} />
+                   
+                    <TextArea label="Description" name="desc" value={item.desc} onChange={handleChange} />
                 </div>}
-                name="Drug" setPopUp={setPopUp} />}
+                name="areas" setPopUp={setPopUp} />}
             {show && <Delete_Modal
                 item={item}
                 submit={submitDelete}
                 cancel={cancel}
-                name="drugs" setPopUp={setShow} />}
+                name="areas" setPopUp={setShow} />}
         </>
 
     )

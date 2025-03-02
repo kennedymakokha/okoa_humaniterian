@@ -10,6 +10,7 @@ import Users from './pages/users/index.jsx'
 import Cert from './pages/certificate'
 import Patients from './pages/patients'
 import Triage from './pages/triage'
+import Areas from './pages/areas'
 import Tests from './pages/tests'
 import Test from './pages/tests/test.jsx'
 import Drugs from './pages/drugs'
@@ -71,6 +72,11 @@ const router = createBrowserRouter([
       {
         path: "patients",
         element: <Patients />,
+      },
+     
+      {
+        path: "areas",
+        element: <Areas />,
       },
       {
         path: "triage",

@@ -117,7 +117,7 @@ export const SelectContainer = ({
     >
 
       <select
-        className={`rounded-md  appearance-none relative block w-[90%]    
+        className={`rounded-md  appearance-none relative px-2 block w-[90%]    
         } placeholder-gray-500 py-2 text-gray-500 focus:outline-none focus:ring-secondary-100  focus:z-10 sm:text-[18px] text-sm`}
         onChange={handleChange}
       >

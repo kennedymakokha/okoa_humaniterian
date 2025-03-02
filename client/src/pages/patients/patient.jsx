@@ -74,20 +74,20 @@ function Patient() {
                 </div>
                 <div className="flex h-full w-3/4  flex-col  p-2">
                     <div className="flex h-full w-full flex-col items-start   shadow-3xl">
-                        <h2 className='font-bold uppercase'>{details.name} </h2>
+                        <h2 className='font-bold uppercase'>{details.name}  </h2>
                         <span className=" text-sm text-[#98daf8] font-semibold capitalize">{details?.role}</span>
-                        <Ratings small row width={5} count={Math.random() * (5 - 0) + 0} />
-                        <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-0">
+                        {/* <Ratings small row width={5} count={Math.random() * (5 - 0) + 0} /> */}
+                        {/* <div className="flex w-full h-10 mt-8 border-b-[0.001px] gap-x-0">
                             {arr.map((menu, i) => (
                                 <TabBatton key={i} toggleState={() => toggleState(menu.title)} title={menu.title} state={menu.state} />
                             ))}
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
 
             </div>
-            {menus.find(item => item.state === true).title === "Report" && <div className="flex w-full h-10 mt-8  gap-x-0">
+            {details.role === "docs"&&menus.find(item => item.state === true).title === "Report" && <div className="flex w-full h-10 mt-8  gap-x-0">
                 {reportarr.map((menu, i) => (
                     <TabBatton child key={i} toggleState={() => setReportMenus(prevItems =>
                         prevItems.map(item => ({

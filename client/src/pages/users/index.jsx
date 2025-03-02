@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import { useFetch_specialitysQuery } from '../../features/slices/specialitySlice';
 import SelectInput from '../../components/SelectInput';
 import { toSingular } from '../../helperFunc';
+import TabBatton from '../../components/tabBatton';
 function index() {
     const [popUp, setPopUp] = useState(false)
     const [show, setShow] = useState(false)
@@ -95,30 +96,32 @@ function index() {
 
     const [item, setItem] = useState(initialState)
 
-    const Tab = ({ title, active }) => {
+    const Tab = ({ title, active, length }) => {
         return (
-            <div onClick={() => {
+            <div className={`flex w-1/${length}  ${active ? "bg-blue-400 text-black" : " text-white bg-blue-700"
+                } h-full  border-r`}>
+                <div onClick={() => {
 
-                setTabs((prevTabs) =>
-                    prevTabs.map((tab) => ({
-                        ...tab,
-                        active: tab.title === title,
+                    setTabs((prevTabs) =>
+                        prevTabs.map((tab) => ({
+                            ...tab,
+                            active: tab.title === title,
+                        }))
+                    );
+                    setItem(prev => ({
+                        ...prev, role: title
                     }))
-                );
-                setItem(prev => ({
-                    ...prev, role: title
-                }))
-                setFilter(prev => ({
-                    ...prev, role: title
-                }))
-                refetch()
+                    setFilter(prev => ({
+                        ...prev, role: title
+                    }))
+                    refetch()
 
-            }} className="flex h-full   text-white  justify-center items-center">
-                <div
-                    className={`flex px-2 font-bold py-1 capitalize ${active ? "bg-blue-400 text-black" : " text-white bg-blue-700"
-                        } shadow-2xl  rounded-md justify-center items-center`}
-                >
-                    {title}
+                }} className={`flex h-full w-full  text-white  justify-center items-center`}>
+                    <div
+                        className={`flex px-2 font-bold py-1 capitalize shadow-2xl  rounded-md justify-center items-center`}
+                    >
+                        {title}
+                    </div>
                 </div>
             </div>
         );
@@ -143,10 +146,15 @@ function index() {
 
     return (
         <>
-            <div className="flex w-full  mt-6   gap-x-1 rounded-md justify-center items-center">
+            <div className="flex w-full h-10  bg-red-500  rounded-md  items-center">
+
                 {tabs.map((tab, i) => (
-                    <Tab key={i} title={tab.title} active={tab.active} />
+
+                    <Tab key={i} title={tab.title} length={tabs.length} active={tab.active} />
+
+                    // 
                 ))}
+
             </div>
             <Table isLoading={isLoading} key_column="name" columns={columns} setPopUp={setPopUp} setItem={setItem} setShow={setShow} title={TabItem} data={isSuccess && data !== undefined ? data?.results?.results
                 : []}
